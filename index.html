@@ -335,92 +335,86 @@
             </div>
           </article>
 
-          <!-- CARD 5: SQL -->
-          <!--          <article class="card fade-in d4">
+          <!-- CARD 5: Pipeline de Vendas SQL (produção) -->
+          <article class="card fade-in d4">
             <div class="media-container"
               style="background:#0f1117;display:flex;align-items:center;justify-content:center;">
-              <div
-                style="width:88%;height:88%;background:#0f1117;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3);">
-                <div
-                  style="background:#1a1d27;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.06);">
-                  <span
-                    style="background:#fcc717;color:#111;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px">SQL</span>
-                  <span style="font-size:11px;color:#666;font-family:monospace">analise_vendas.sql</span>
+              <div style="width:88%;height:88%;background:#0f1117;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3);">
+                <div style="background:#1a1d27;padding:10px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.06);">
+                  <span style="background:#fcc717;color:#111;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px">SQL</span>
+                  <span style="font-size:10px;color:#60a0f0;background:rgba(96,160,240,.1);border:1px solid rgba(96,160,240,.2);padding:1px 7px;border-radius:3px">produção</span>
+                  <span style="font-size:11px;color:#666;font-family:monospace">pipeline_vendas.sql</span>
                 </div>
-                <div style="padding:14px 16px;font-family:monospace;font-size:11px;line-height:1.8">
-                  <div><span style="color:#4a4a6a">-- KPIs mensais por vendedor</span></div>
-                  <div><span style="color:#7c9ef8">SELECT</span></div>
-                  <div>&nbsp;&nbsp;<span style="color:#fcc717">DATE_TRUNC</span>(<span
-                      style="color:#a6e3a1">'month'</span>, data_venda) <span style="color:#7c9ef8">AS</span> mes,</div>
-                  <div>&nbsp;&nbsp;vendedor_nome,</div>
-                  <div>&nbsp;&nbsp;<span style="color:#fcc717">SUM</span>(valor) <span style="color:#7c9ef8">AS</span>
-                    receita,</div>
-                  <div>&nbsp;&nbsp;<span style="color:#fcc717">RANK</span>() <span style="color:#7c9ef8">OVER</span>
-                    (<span style="color:#7c9ef8">PARTITION BY</span> mes <span style="color:#7c9ef8">ORDER BY</span>
-                    receita <span style="color:#7c9ef8">DESC</span>)</div>
-                  <div><span style="color:#7c9ef8">FROM</span> vendas <span style="color:#7c9ef8">GROUP BY</span> <span
-                      style="color:#fab387">1</span>,<span style="color:#fab387">2</span>;</div>
+                <div style="padding:12px 16px;font-family:monospace;font-size:11px;line-height:1.8">
+                  <div><span style="color:#585878;font-style:italic">-- CTE: vendas (habilitados + aguardando)</span></div>
+                  <div><span style="color:#7c9ef8">WITH</span> vendas <span style="color:#7c9ef8">AS</span> (</div>
+                  <div>&nbsp;&nbsp;<span style="color:#7c9ef8">SELECT</span> id_cliente_servico, data_habilitacao,</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;origem, valor, vendedor, cidade</div>
+                  <div>&nbsp;&nbsp;<span style="color:#7c9ef8">FROM</span> cliente_servico</div>
+                  <div>&nbsp;&nbsp;<span style="color:#7c9ef8">WHERE</span> id_servico_status <span style="color:#7c9ef8">IN</span> (<span style="color:#fab387">11</span>, <span style="color:#fab387">6</span>)</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7c9ef8">AND</span> origem = <span style="color:#a6e3a1">'novo'</span></div>
+                  <div><span style="color:#7c9ef8">UNION ALL</span> <span style="color:#585878;font-style:italic">-- aguardando instalação</span></div>
+                  <div>&nbsp;&nbsp;...</div>
+                  <div>)<span style="color:#7c9ef8"> SELECT</span> * <span style="color:#7c9ef8">FROM</span> vendas;</div>
                 </div>
               </div>
             </div>
             <div class="content">
               <div class="content__top">
-                <h3 class="title">Análise de Vendas com SQL</h3><span class="pill"
-                  style="background:rgba(96,160,240,.12);color:#60a0f0;border-color:rgba(96,160,240,.25)">SQL</span>
+                <h3 class="title">Pipeline de Vendas Comerciais</h3>
+                <span class="pill" style="background:rgba(96,160,240,.12);color:#60a0f0;border-color:rgba(96,160,240,.25)">SQL</span>
               </div>
-              <p class="desc">Queries avançadas para ranking de vendedores, sazonalidade e identificação de produtos
-                críticos com Window Functions.</p>
+              <p class="desc">Query em produção que classifica vendas novas com regras de elegibilidade por status, motivo de cancelamento e exclusão de operações internas — via CTEs e UNION ALL.</p>
               <div class="meta">
-                <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">Window Fn</span><span
-                    class="tag">CTE</span></div>
-                <a href="projetos/sql.html" class="btn-link">Ver detalhes ➔</a>
+                <div class="tags">
+                  <span class="tag">PostgreSQL</span>
+                  <span class="tag">CTE</span>
+                  <span class="tag">UNION ALL</span>
+                  <span class="tag">Produção</span>
+                </div>
+                <a href="projetos/sql_pipeline_vendas.html" class="btn-link">Ver detalhes ➔</a>
               </div>
             </div>
           </article>
 
-
-           CARD 6: SQL 
-          <article class="card fade-in d4">
+          <!-- CARD 6: Pipeline de Reconexões SQL (produção) -->
+          <article class="card fade-in d5">
             <div class="media-container"
               style="background:#0f1117;display:flex;align-items:center;justify-content:center;">
-              <div
-                style="width:88%;height:88%;background:#0f1117;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3);">
-                <div
-                  style="background:#1a1d27;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.06);">
-                  <span
-                    style="background:#fcc717;color:#111;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px">SQL</span>
-                  <span style="font-size:11px;color:#666;font-family:monospace">analise_vendas.sql</span>
+              <div style="width:88%;height:88%;background:#0f1117;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3);">
+                <div style="background:#1a1d27;padding:10px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.06);">
+                  <span style="background:#fcc717;color:#111;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px">SQL</span>
+                  <span style="font-size:10px;color:#60a0f0;background:rgba(96,160,240,.1);border:1px solid rgba(96,160,240,.2);padding:1px 7px;border-radius:3px">produção</span>
+                  <span style="font-size:11px;color:#666;font-family:monospace">pipeline_reconexoes.sql</span>
                 </div>
-                <div style="padding:14px 16px;font-family:monospace;font-size:11px;line-height:1.8">
-                  <div><span style="color:#4a4a6a">-- KPIs mensais por vendedor</span></div>
-                  <div><span style="color:#7c9ef8">SELECT</span></div>
-                  <div>&nbsp;&nbsp;<span style="color:#fcc717">DATE_TRUNC</span>(<span
-                      style="color:#a6e3a1">'month'</span>, data_venda) <span style="color:#7c9ef8">AS</span> mes,</div>
-                  <div>&nbsp;&nbsp;vendedor_nome,</div>
-                  <div>&nbsp;&nbsp;<span style="color:#fcc717">SUM</span>(valor) <span style="color:#7c9ef8">AS</span>
-                    receita,</div>
-                  <div>&nbsp;&nbsp;<span style="color:#fcc717">RANK</span>() <span style="color:#7c9ef8">OVER</span>
-                    (<span style="color:#7c9ef8">PARTITION BY</span> mes <span style="color:#7c9ef8">ORDER BY</span>
-                    receita <span style="color:#7c9ef8">DESC</span>)</div>
-                  <div><span style="color:#7c9ef8">FROM</span> vendas <span style="color:#7c9ef8">GROUP BY</span> <span
-                      style="color:#fab387">1</span>,<span style="color:#fab387">2</span>;</div>
+                <div style="padding:12px 16px;font-family:monospace;font-size:11px;line-height:1.8">
+                  <div><span style="color:#585878;font-style:italic">-- Tipo 1: Inativo → Ativo via regex</span></div>
+                  <div><span style="color:#7c9ef8">JOIN</span> cliente_historico ch_novo</div>
+                  <div>&nbsp;&nbsp;<span style="color:#7c9ef8">ON</span> <span style="color:#fcc717">substring</span>(ch_novo.historico</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7c9ef8">FROM</span> <span style="color:#a6e3a1">'servi[çc]o de n[úu]mero \((\d+)\)'</span>)</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;::int = cliente_servico.numero_plano</div>
+                  <div><span style="color:#7c9ef8">JOIN</span> cliente_historico ch_inativo</div>
+                  <div>&nbsp;&nbsp;<span style="color:#7c9ef8">ON</span> ch_inativo.historico <span style="color:#f38ba8">~*</span> <span style="color:#a6e3a1">'Inativo para Ativo'</span></div>
                 </div>
               </div>
             </div>
             <div class="content">
               <div class="content__top">
-                <h3 class="title">Análise de Vendas com SQL</h3><span class="pill"
-                  style="background:rgba(96,160,240,.12);color:#60a0f0;border-color:rgba(96,160,240,.25)">SQL</span>
+                <h3 class="title">Identificação de Reconexões via Text Mining</h3>
+                <span class="pill" style="background:rgba(96,160,240,.12);color:#60a0f0;border-color:rgba(96,160,240,.25)">SQL</span>
               </div>
-              <p class="desc">Queries avançadas para ranking de vendedores, sazonalidade e identificação de produtos
-                críticos com Window Functions.</p>
+              <p class="desc">3 CTEs encadeadas que identificam tipos distintos de reconexão via regex no histórico de eventos — com window function LAG, subquery correlacionada e deduplicação cruzada entre CTEs.</p>
               <div class="meta">
-                <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">Window Fn</span><span
-                    class="tag">CTE</span></div>
-                <a href="projetos/sql.html" class="btn-link">Ver detalhes ➔</a>
+                <div class="tags">
+                  <span class="tag">PostgreSQL</span>
+                  <span class="tag">Regex ~*</span>
+                  <span class="tag">LAG</span>
+                  <span class="tag">Produção</span>
+                </div>
+                <a href="projetos/sql_pipeline_reconexoes.html" class="btn-link">Ver detalhes ➔</a>
               </div>
             </div>
-          </article>-->
+          </article>
 
         </div>
       </div>
