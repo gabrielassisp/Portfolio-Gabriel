@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pipeline de Reconexões — SQL | Gabriel Assis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0b0c10;
+            --card: #1b1d24;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-solid: #2a2d36;
+            --text: #f0f0f0;
+            --muted: #a0a0a0;
+            --accent: #fcc717;
+            --accent-glow: rgba(252, 199, 23, 0.12);
+            --accent-dim: rgba(252, 199, 23, 0.2);
+            --nav-h: 56px;
+            --font: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image: linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+            background-size: 60px 60px;
+            color: var(--text);
+            font-family: var(--font);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .cabeca {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-h);
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(11, 12, 16, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+        }
+
+        .nome_naveg {
+            color: var(--text);
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .nome_naveg .by {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 300;
+            margin-right: 2px;
+        }
+
+        .nome_naveg .ponto {
+            color: var(--accent);
+        }
+
+        .naveg ul {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .naveg a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.25s;
+        }
+
+        .naveg a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 1.5px;
+            width: 0;
+            background: var(--accent);
+            transition: width 0.25s;
+        }
+
+        .naveg a:hover {
+            color: var(--text);
+        }
+
+        .naveg a:hover::after {
+            width: 100%;
+        }
+
+        main {
+            padding-top: calc(var(--nav-h) + 60px);
+            padding-bottom: 100px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 40px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .breadcrumb a {
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent);
+        }
+
+        .breadcrumb span {
+            color: var(--border-solid);
+        }
+
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 20px;
+            margin-bottom: 48px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .btn-voltar:hover {
+            color: var(--text);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .proj-badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #60a0f0;
+            background: rgba(96, 160, 240, 0.1);
+            border: 1px solid rgba(96, 160, 240, 0.25);
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .proj-title {
+            font-size: clamp(28px, 4vw, 46px);
+            font-weight: 700;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            color: var(--text);
+            margin-bottom: 14px;
+        }
+
+        .proj-desc {
+            font-size: 16px;
+            color: var(--muted);
+            max-width: 700px;
+            line-height: 1.7;
+        }
+
+        .proj-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .tag {
+            font-size: 12px;
+            color: var(--muted);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 5px 12px;
+            border-radius: 6px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+            margin-top: 48px;
+        }
+
+        .code-block {
+            background: #0f1117;
+            border: 1px solid var(--border-solid);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .code-header {
+            background: #1a1d27;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .sql-badge-hd {
+            background: var(--accent);
+            color: #111;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 4px;
+        }
+
+        .cte-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #a0b0d0;
+            background: rgba(96, 130, 200, 0.12);
+            border: 1px solid rgba(96, 130, 200, 0.2);
+            padding: 2px 10px;
+            border-radius: 4px;
+        }
+
+        .code-filename {
+            font-size: 13px;
+            color: #666;
+            font-family: monospace;
+            margin-left: 4px;
+        }
+
+        .code-body {
+            padding: 24px 28px;
+            font-family: 'Courier New', monospace;
+            font-size: 12.5px;
+            line-height: 1.85;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .sk {
+            color: #7c9ef8;
+        }
+
+        .sf {
+            color: #fcc717;
+        }
+
+        .ss {
+            color: #a6e3a1;
+        }
+
+        .sc {
+            color: #585878;
+            font-style: italic;
+        }
+
+        .sd {
+            color: #cdd6f4;
+        }
+
+        .sn {
+            color: #fab387;
+        }
+
+        .sr {
+            color: #f38ba8;
+        }
+
+        .detalhe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .detalhe-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+
+        .detalhe-card:hover {
+            border-color: var(--accent-dim);
+            transform: translateY(-3px);
+        }
+
+        .detalhe-card-titulo {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+        }
+
+        .detalhe-card-corpo {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        .detalhe-card-corpo li {
+            list-style: none;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .detalhe-card-corpo li::before {
+            content: '→';
+            color: var(--accent);
+            flex-shrink: 0;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 24px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 80px;
+        }
+
+        .footer-brand {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .footer-brand strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .footer-brand .ponto {
+            color: var(--accent);
+        }
+
+        @media(max-width:768px) {
+            .cabeca {
+                padding: 0 20px;
+            }
+
+            .naveg ul {
+                gap: 20px;
+            }
+
+            main {
+                padding-top: calc(var(--nav-h) + 32px);
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-solid);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="cabeca">
+        <a href="../index.html" class="nome_naveg"><span class="by">by</span> Gabriel Assis Pereira<span
+                class="ponto">.</span></a>
+        <nav class="naveg">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../index.html#sobremim">Sobre Mim</a></li>
+                <li><a href="../index.html#projetos">Projetos</a></li>
+                <li><a href="../index.html#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="../index.html">Início</a><span>/</span>
+                <a href="../index.html#projetos">Projetos</a><span>/</span>
+                <span style="color:var(--text)">Pipeline de Reconexões</span>
+            </div>
+            <a href="../index.html#projetos" class="btn-voltar">← Voltar aos projetos</a>
+            <div style="margin-bottom:48px">
+                <div class="proj-badge">SQL · PostgreSQL · Produção</div>
+                <h1 class="proj-title">Identificação de Reconexões via Text Mining em SQL</h1>
+                <p class="proj-desc">Query de produção que identifica 3 tipos distintos de reconexão de clientes através
+                    de análise de texto no histórico de eventos usando regex nativo do PostgreSQL — com window
+                    functions, subqueries correlacionadas e CTEs encadeadas com dependência entre si.</p>
+                <div class="proj-tags"><span class="tag">PostgreSQL</span><span class="tag">Regex ~*</span><span
+                        class="tag">Window Function LAG</span><span class="tag">Subquery correlacionada</span><span
+                        class="tag">Produção</span></div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-body">
+
+                    <span class="sc">-- ═══════════════════════════════════════════════════════════</span>
+                    <span class="sc">-- CTEs: reconexao_tum | reconexao_tdois | reconexao_ttres</span>
+                    <span class="sc">-- Identifica <span class="sn">3</span> tipos distintos de reconexão via
+                        análise</span>
+                    <span class="sc">-- de histórico textual com regex (PostgreSQL <span class="sr">~*</span>)</span>
+                    <span class="sc">-- ═══════════════════════════════════════════════════════════</span>
+
+                    <span class="sc">-- TIPO <span class="sn">1</span>: Reativação direta (Inativo → Ativo + novo
+                        serviço no mesmo dia)</span>
+                    reconexao_tum <span class="sk">AS</span> (
+                    <span class="sk">SELECT</span>
+                    cliente_servico.id_cliente_servico,
+                    ch_novo.data_cadastro::date <span class="sk">AS</span> data_habilitacao,
+                    uv.name <span class="sk">AS</span> vendedor,
+                    cliente.nome_razaosocial,
+                    servico.descricao <span class="sk">AS</span> servico,
+                    cidade.nome <span class="sk">AS</span> cidade
+
+                    <span class="sk">FROM</span> cliente_servico
+
+                    <span class="sc">-- Evento <span class="sn">1</span>: "Novo serviço de número (X) adicionado" —
+                        ancora pelo numero_plano</span>
+                    <span class="sk">JOIN</span> cliente_historico ch_novo
+                    <span class="sk">ON</span> ch_novo.id_cliente = cliente_servico.id_cliente
+                    <span class="sk">AND</span> <span class="sk">substring</span>(ch_novo.historico
+                    <span class="sk">FROM</span> <span class="ss">'(?i)servi[çc]o de n[úu]mero \((\d+)\)'</span>)::int
+                    = cliente_servico.numero_plano
+                    <span class="sk">AND</span> ch_novo.historico <span class="sr">~*</span> <span class="ss">'Novo
+                        servi[çc]o de n[úu]mero \(\d+\) adicionado'</span>
+
+                    <span class="sc">-- Evento <span class="sn">2</span>: "Inativo para Ativo" deve ser IMEDIATAMENTE
+                        anterior ao evento <span class="sn">1</span></span>
+                    <span class="sk">JOIN</span> cliente_historico ch_inativo
+                    <span class="sk">ON</span> ch_inativo.id_cliente = cliente_servico.id_cliente
+                    <span class="sk">AND</span> ch_inativo.historico <span class="sr">~*</span>
+                    <span class="ss">'Dados cadastrais alterados.*O status do cadastro alterou '</span>
+                    || <span class="ss">'de Inativo para Ativo.*Modificação feita automaticamente'</span>
+                    <span class="sk">AND</span> ch_inativo.data_cadastro::date = ch_novo.data_cadastro::date
+                    <span class="sk">AND</span> ch_inativo.id_cliente_historico = (
+                    <span class="sc">-- Garante sequência imediata no histórico</span>
+                    <span class="sk">SELECT</span> <span class="sk">max</span>(ch2.id_cliente_historico)
+                    <span class="sk">FROM</span> cliente_historico ch2
+                    <span class="sk">WHERE</span> ch2.id_cliente = ch_novo.id_cliente
+                    <span class="sk">AND</span> ch2.id_cliente_historico &lt; ch_novo.id_cliente_historico
+                    )
+
+                    <span class="sk">LEFT JOIN</span> users uv <span class="sk">ON</span> uv.id = ch_novo.id_usuario
+                    <span class="sk">LEFT JOIN</span> cliente <span class="sk">ON</span> cliente_servico.id_cliente =
+                    cliente.id_cliente
+                    <span class="sk">LEFT JOIN</span> servico <span class="sk">ON</span> cliente_servico.id_servico =
+                    servico.id_servico
+                    <span class="sk">LEFT JOIN</span> servico_status <span class="sk">ON</span>
+                    cliente_servico.id_servico_status = servico_status.id_servico_status
+                    <span class="sk">LEFT JOIN</span> cliente_servico_endereco
+                    <span class="sk">ON</span> cliente_servico.id_cliente_servico =
+                    cliente_servico_endereco.id_cliente_servico
+                    <span class="sk">LEFT JOIN</span> endereco_numero <span class="sk">ON</span>
+                    cliente_servico_endereco.id_endereco_numero = endereco_numero.id_endereco_numero
+                    <span class="sk">LEFT JOIN</span> cidade <span class="sk">ON</span> endereco_numero.id_cidade =
+                    cidade.id_cidade
+
+                    <span class="sk">WHERE</span> ch_novo.data_cadastro::date <span class="sk">BETWEEN</span> <span
+                        class="ss">'<span class="sn">2025</span>-<span class="sn">01</span>-<span
+                            class="sn">01</span>'</span> <span class="sk">AND</span> current_date
+                    <span class="sk">AND</span> (cliente_servico.id_servico_status = <span class="sn">11</span>
+                    <span class="sk">OR</span> (cliente_servico.id_servico_status = <span class="sn">9</span>
+                    <span class="sk">AND</span> cliente_servico.id_motivo_cancelamento = <span class="sn">3</span>))
+                    <span class="sk">AND</span> cliente.codigo_cliente <span class="sk">NOT IN</span> (<span
+                        class="sn">12412</span>,<span class="sn">10384</span>,<span class="sn">11370</span>)
+                    <span class="sk">AND</span> ch_novo.id_usuario <span class="sk">NOT IN</span> (<span
+                        class="sn">1</span>,<span class="sn">79</span>,<span class="sn">81</span>,<span
+                        class="sn">82</span>,<span class="sn">88</span>,<span class="sn">92</span>,<span
+                        class="sn">135</span>,<span class="sn">142</span>,<span class="sn">371</span>)
+
+                    <span class="sc">-- Exclui se já consta em vendas recentes (≤ <span class="sn">7</span> dias)</span>
+                    <span class="sk">AND</span> cliente_servico.id_cliente_servico <span class="sk">NOT IN</span> (
+                    <span class="sk">SELECT</span> id_cliente_servico <span class="sk">FROM</span> vendas
+                    <span class="sk">WHERE</span> ch_novo.data_cadastro::date - vendas.data_habilitacao::date &lt;=
+                    <span class="sn">7</span>
+                    )
+                    <span class="sc">-- Exclui troca de titularidade detectada via <span class="sk">LAG</span> no
+                        histórico</span>
+                    <span class="sk">AND</span> cliente_servico.id_cliente <span class="sk">NOT IN</span> (
+                    <span class="sk">SELECT</span> ht.id_cliente
+                    <span class="sk">FROM</span> (
+                    <span class="sk">SELECT</span> ch2.id_cliente,
+                    ch2.historico,
+                    <span class="sk">lag</span>(ch2.historico) <span class="sk">OVER</span> (
+                    <span class="sk">PARTITION BY</span> ch2.id_cliente
+                    <span class="sk">ORDER BY</span> ch2.data_cadastro, ch2.id_cliente_historico
+                    ) <span class="sk">AS</span> historico_anterior
+                    <span class="sk">FROM</span> cliente_historico ch2
+                    ) ht
+                    <span class="sk">WHERE</span> ht.historico <span class="sr">~*</span> <span class="ss">'status do
+                        cadastro alterou de Inativo para Ativo'</span>
+                    <span class="sk">AND</span> ht.historico_anterior <span class="sr">~*</span> <span class="ss">'troca
+                        de titularidade'</span>
+                    )
+                    ),
+
+                    <span class="sc">-- TIPO <span class="sn">2</span>: Cancelamento revertido + migração de plano
+                        (janela de <span class="sn">1</span> dia + <span class="sn">7</span> dias)</span>
+                    reconexao_tdois <span class="sk">AS</span> (
+                    <span class="sk">SELECT</span>
+                    cliente_servico.id_cliente_servico,
+                    ch_mig.data_cadastro::date <span class="sk">AS</span> data_habilitacao,
+                    u.name <span class="sk">AS</span> vendedor,
+                    cliente.nome_razaosocial,
+                    servico.descricao <span class="sk">AS</span> servico,
+                    cidade.nome <span class="sk">AS</span> cidade
+
+                    <span class="sk">FROM</span> cliente_servico
+                    <span class="sk">JOIN</span> cliente_servico csantigo
+                    <span class="sk">ON</span> cliente_servico.id_cliente_servico_antigo = csantigo.id_cliente_servico
+
+                    <span class="sc">-- Passo <span class="sn">1</span>: localiza o evento de reversão pelo número do
+                        plano antigo</span>
+                    <span class="sk">JOIN</span> cliente_historico ch_rev
+                    <span class="sk">ON</span> ch_rev.id_cliente = cliente_servico.id_cliente
+                    <span class="sk">AND</span> <span class="sk">substring</span>(ch_rev.historico <span
+                        class="sk">FROM</span> <span class="ss">'\((\d+)\)'</span>)::int = csantigo.numero_plano
+                    <span class="sk">AND</span> ch_rev.historico <span class="sr">~*</span> <span class="ss">'O
+                        cancelamento do servi[çc]o.*foi revertido\.'</span>
+
+                    <span class="sc">-- Passo <span class="sn">2</span>: localiza evento de atualização do plano novo
+                        (janela: mesmo dia + <span class="sn">1</span>)</span>
+                    <span class="sk">JOIN</span> cliente_historico ch_atual
+                    <span class="sk">ON</span> ch_atual.id_cliente = cliente_servico.id_cliente
+                    <span class="sk">AND</span> <span class="sk">substring</span>(ch_atual.historico <span
+                        class="sk">FROM</span> <span class="ss">'\((\d+)\)'</span>)::int = cliente_servico.numero_plano
+                    <span class="sk">AND</span> ch_atual.historico <span class="sr">~*</span> <span class="ss">'Dados do
+                        Servi[çc]o'</span>
+                    <span class="sk">AND</span> ch_atual.data_cadastro &gt; ch_rev.data_cadastro
+                    <span class="sk">AND</span> ch_atual.data_cadastro::date - ch_rev.data_cadastro::date &lt;= <span
+                        class="sn">1</span>
+
+                    <span class="sc">-- Passo <span class="sn">3</span>: localiza linha de migração plano antigo → plano
+                        novo (janela: <span class="sn">7</span> dias)</span>
+                    <span class="sk">JOIN</span> cliente_historico ch_mig
+                    <span class="sk">ON</span> ch_mig.id_cliente = cliente_servico.id_cliente
+                    <span class="sk">AND</span> ch_mig.historico <span class="sr">~*</span> <span
+                        class="ss">'migrou\s+para'</span>
+                    <span class="sk">AND</span> <span class="sk">substring</span>(ch_mig.historico <span
+                        class="sk">FROM</span> <span class="ss">'servi[cç]o\s*\((\d+)\)'</span>)::int
+                    = csantigo.numero_plano
+                    <span class="sk">AND</span> <span class="sk">substring</span>(ch_mig.historico
+                    <span class="sk">FROM</span> <span
+                        class="ss">'migrou\s+para\s+o\s+servi[cç]o\s*\((\d+)\)'</span>)::int
+                    = cliente_servico.numero_plano
+                    <span class="sk">AND</span> ch_mig.data_cadastro &gt; ch_rev.data_cadastro
+                    <span class="sk">AND</span> ch_mig.data_cadastro &lt;= ch_rev.data_cadastro + <span
+                        class="sk">INTERVAL</span> <span class="ss">'<span class="sn">7</span> day'</span>
+
+                    <span class="sk">LEFT JOIN</span> users u <span class="sk">ON</span> u.name =
+                    <span class="sk">coalesce</span>(<span class="sk">substring</span>(ch_atual.historico <span
+                        class="sk">FROM</span> <span class="ss">'Vendedor:\s*([^;]+)'</span>), u.name)
+                    <span class="sk">LEFT JOIN</span> cliente <span class="sk">ON</span> cliente_servico.id_cliente =
+                    cliente.id_cliente
+                    <span class="sk">LEFT JOIN</span> servico <span class="sk">ON</span> cliente_servico.id_servico =
+                    servico.id_servico
+                    <span class="sk">LEFT JOIN</span> cliente_servico_endereco
+                    <span class="sk">ON</span> cliente_servico.id_cliente_servico =
+                    cliente_servico_endereco.id_cliente_servico
+                    <span class="sk">LEFT JOIN</span> endereco_numero <span class="sk">ON</span>
+                    cliente_servico_endereco.id_endereco_numero = endereco_numero.id_endereco_numero
+                    <span class="sk">LEFT JOIN</span> cidade <span class="sk">ON</span> endereco_numero.id_cidade =
+                    cidade.id_cidade
+
+                    <span class="sk">WHERE</span> ch_atual.data_cadastro::date <span class="sk">BETWEEN</span> <span
+                        class="ss">'<span class="sn">2025</span>-<span class="sn">01</span>-<span
+                            class="sn">01</span>'</span> <span class="sk">AND</span> current_date
+                    <span class="sk">AND</span> (cliente_servico.id_servico_status <span class="sk">IN</span> (<span
+                        class="sn">11</span>)
+                    <span class="sk">OR</span> (cliente_servico.id_servico_status <span class="sk">IN</span> (<span
+                        class="sn">9</span>)
+                    <span class="sk">AND</span> cliente_servico.id_motivo_cancelamento <span class="sk">IN</span> (<span
+                        class="sn">3</span>)))
+                    <span class="sk">AND</span> ch_atual.id_usuario <span class="sk">NOT IN</span> (<span
+                        class="sn">1</span>,<span class="sn">79</span>,<span class="sn">81</span>,<span
+                        class="sn">82</span>,<span class="sn">88</span>,<span class="sn">92</span>,<span
+                        class="sn">135</span>,<span class="sn">142</span>,<span class="sn">371</span>)
+                    <span class="sk">AND</span> cliente_servico.id_cliente_servico <span class="sk">NOT IN</span> (
+                    <span class="sk">SELECT</span> id_cliente_servico <span class="sk">FROM</span> vendas
+                    <span class="sk">WHERE</span> ch_atual.data_cadastro::date - vendas.data_habilitacao::date &lt;=
+                    <span class="sn">7</span>)
+                    <span class="sk">AND</span> cliente_servico.id_cliente_servico <span class="sk">NOT IN</span> (<span
+                        class="sk">SELECT</span> id_cliente_servico <span class="sk">FROM</span> reconexao_tum)
+                    ),
+
+                    <span class="sc">-- TIPO <span class="sn">3</span>: Renovação manual após reversão de
+                        cancelamento</span>
+                    reconexao_ttres <span class="sk">AS</span> (
+                    <span class="sk">SELECT</span>
+                    cliente_servico.id_cliente_servico,
+                    ch_atual.data_cadastro::date <span class="sk">AS</span> data_habilitacao,
+                    u.name <span class="sk">AS</span> vendedor,
+                    cliente.nome_razaosocial,
+                    servico.descricao <span class="sk">AS</span> servico,
+                    cidade.nome <span class="sk">AS</span> cidade
+
+                    <span class="sk">FROM</span> cliente_servico
+
+                    <span class="sk">JOIN</span> cliente_historico ch_rev
+                    <span class="sk">ON</span> cliente_servico.id_cliente = ch_rev.id_cliente
+                    <span class="sk">AND</span> <span class="sk">substring</span>(ch_rev.historico <span
+                        class="sk">FROM</span> <span class="ss">'\((\d+)\)'</span>)::int = cliente_servico.numero_plano
+                    <span class="sk">AND</span> ch_rev.historico <span class="sr">~*</span> <span class="ss">'O
+                        cancelamento do servi[çc]o.*foi revertido\.'</span>
+
+                    <span class="sk">LEFT JOIN</span> cliente_historico ch_atual
+                    <span class="sk">ON</span> cliente_servico.id_cliente = ch_atual.id_cliente
+                    <span class="sk">AND</span> <span class="sk">substring</span>(ch_atual.historico <span
+                        class="sk">FROM</span> <span class="ss">'\((\d+)\)'</span>)::int = cliente_servico.numero_plano
+                    <span class="sk">AND</span> ch_atual.historico <span class="sr">~*</span> <span
+                        class="ss">'Servi[çc]o.*foi renovado manualmente\.'</span>
+                    <span class="sk">AND</span> ch_atual.data_cadastro &gt; ch_rev.data_cadastro
+                    <span class="sk">AND</span> ch_atual.data_cadastro::date - ch_rev.data_cadastro::date &lt;= <span
+                        class="sn">1</span>
+
+                    <span class="sk">LEFT JOIN</span> users u <span class="sk">ON</span> u.id = <span
+                        class="sk">coalesce</span>(ch_atual.id_usuario, ch_rev.id_usuario)
+                    <span class="sk">LEFT JOIN</span> cliente <span class="sk">ON</span> cliente_servico.id_cliente =
+                    cliente.id_cliente
+                    <span class="sk">LEFT JOIN</span> servico <span class="sk">ON</span> cliente_servico.id_servico =
+                    servico.id_servico
+                    <span class="sk">LEFT JOIN</span> cliente_servico_endereco
+                    <span class="sk">ON</span> cliente_servico.id_cliente_servico =
+                    cliente_servico_endereco.id_cliente_servico
+                    <span class="sk">LEFT JOIN</span> endereco_numero <span class="sk">ON</span>
+                    cliente_servico_endereco.id_endereco_numero = endereco_numero.id_endereco_numero
+                    <span class="sk">LEFT JOIN</span> cidade <span class="sk">ON</span> endereco_numero.id_cidade =
+                    cidade.id_cidade
+
+                    <span class="sk">WHERE</span> ch_atual.data_cadastro::date <span class="sk">BETWEEN</span> <span
+                        class="ss">'<span class="sn">2025</span>-<span class="sn">01</span>-<span
+                            class="sn">01</span>'</span> <span class="sk">AND</span> current_date
+                    <span class="sk">AND</span> (cliente_servico.id_servico_status <span class="sk">IN</span> (<span
+                        class="sn">11</span>)
+                    <span class="sk">OR</span> (cliente_servico.id_servico_status <span class="sk">IN</span> (<span
+                        class="sn">9</span>)
+                    <span class="sk">AND</span> cliente_servico.id_motivo_cancelamento <span class="sk">IN</span> (<span
+                        class="sn">3</span>)))
+                    <span class="sk">AND</span> <span class="sk">coalesce</span>(ch_atual.id_usuario, ch_rev.id_usuario)
+                    <span class="sk">NOT IN</span> (<span class="sn">1</span>,<span class="sn">79</span>,<span
+                        class="sn">81</span>,<span class="sn">82</span>,<span class="sn">88</span>,<span
+                        class="sn">92</span>,<span class="sn">135</span>,<span class="sn">142</span>,<span
+                        class="sn">371</span>)
+                    <span class="sk">AND</span> cliente_servico.id_cliente_servico <span class="sk">NOT IN</span> (
+                    <span class="sk">SELECT</span> id_cliente_servico <span class="sk">FROM</span> vendas
+                    <span class="sk">WHERE</span> ch_atual.data_cadastro::date - vendas.data_habilitacao::date &lt;=
+                    <span class="sn">7</span>)
+                    <span class="sk">AND</span> cliente_servico.id_cliente_servico <span class="sk">NOT IN</span> (<span
+                        class="sk">SELECT</span> id_cliente_servico <span class="sk">FROM</span> reconexao_tum)
+                    <span class="sk">AND</span> cliente_servico.id_cliente_servico <span class="sk">NOT IN</span> (
+                    <span class="sk">SELECT</span> id_cliente_servico <span class="sk">FROM</span> reconexao_tdois
+                    <span class="sk">WHERE</span> ch_atual.data_cadastro::date - reconexao_tdois.data_habilitacao &lt;=
+                    <span class="sn">30</span>)
+                    )
+
+                    <span class="sc">-- <span class="sk">SELECT</span> FINAL — consolida todos os tipos numa única
+                        visão</span>
+                    <span class="sk">SELECT</span> * <span class="sk">FROM</span> vendas
+                    <span class="sk">UNION ALL</span> <span class="sk">SELECT</span> * <span class="sk">FROM</span>
+                    reconexao_tum
+                    <span class="sk">UNION ALL</span> <span class="sk">SELECT</span> * <span class="sk">FROM</span>
+                    reconexao_tdois
+                    <span class="sk">UNION ALL</span> <span class="sk">SELECT</span> * <span class="sk">FROM</span>
+                    reconexao_ttres
+                    <span class="sk">ORDER BY</span> data_habilitacao <span class="sk">DESC</span>;
+                </div>
+            </div>
+            <div class="detalhe-grid">
+                <div class="detalhe-card">
+                    <div class="detalhe-card-titulo">Contexto</div>
+                    <div class="detalhe-card-corpo">Parte mais complexa do pipeline comercial. Identifica clientes que
+                        reconectaram ao serviço — o que conta como nova venda — distinguindo-os de reativações internas,
+                        trocas de titularidade e duplicatas já capturadas pela CTE de vendas.</div>
+                </div>
+                <div class="detalhe-card">
+                    <div class="detalhe-card-titulo">Técnicas Utilizadas</div>
+                    <ul class="detalhe-card-corpo">
+                        <li>Regex com ~* para parsing de texto livre no historico</li>
+                        <li>Window Function LAG com PARTITION BY para garantir sequência de eventos</li>
+                        <li>Subquery correlacionada para validar imediatamente anterior no histórico</li>
+                        <li>3 CTEs com exclusão cruzada (cada tipo exclui o que o anterior já capturou)</li>
+                    </ul>
+                </div>
+                <div class="detalhe-card">
+                    <div class="detalhe-card-titulo">Os 3 tipos de reconexão</div>
+                    <ul class="detalhe-card-corpo">
+                        <li>Tipo 1 (tum): Inativo→Ativo + novo serviço no mesmo dia</li>
+                        <li>Tipo 2 (tdois): Reversão de cancelamento + migração de plano (janela 7 dias)</li>
+                        <li>Tipo 3 (ttres): Reversão de cancelamento + renovação manual (janela 1 dia)</li>
+                        <li>Exclusão de troca de titularidade via LAG no histórico de eventos</li>
+                    </ul>
+                </div>
+                <div class="detalhe-card">
+                    <div class="detalhe-card-titulo">Impacto</div>
+                    <ul class="detalhe-card-corpo">
+                        <li>Elimina contagem incorreta de reconexões como vendas novas</li>
+                        <li>Atribui corretamente o vendedor responsável via parsing de texto</li>
+                        <li>Garante que cada reconexão seja contada apenas uma vez (deduplicação)</li>
+                        <li>Consolidado com o pipeline de vendas via UNION ALL no SELECT final</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-brand"><span style="font-size:11px;color:var(--muted)">by</span> <strong>Gabriel Assis
+                Pereira</strong><span class="ponto">.</span></div>
+        <a href="../index.html#projetos" style="font-size:13px;color:var(--muted);text-decoration:none"
+            onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">← Todos os
+            projetos</a>
+    </footer>
+</body>
+
+</html>

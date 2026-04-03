@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pipeline de Vendas — SQL | Gabriel Assis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--bg:#0b0c10;--card:#1b1d24;--border:rgba(255,255,255,0.08);--border-solid:#2a2d36;--text:#f0f0f0;--muted:#a0a0a0;--accent:#fcc717;--accent-glow:rgba(252,199,23,0.12);--accent-dim:rgba(252,199,23,0.2);--nav-h:56px;--font:'Inter',sans-serif;}
+    body{background-color:var(--bg);background-image:linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);background-size:60px 60px;color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;}
+    .cabeca{position:fixed;top:0;left:0;width:100%;height:var(--nav-h);padding:0 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(11,12,16,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:1000;}
+    .nome_naveg{color:var(--text);font-size:15px;font-weight:500;text-decoration:none;}.nome_naveg .by{font-size:11px;color:var(--muted);font-weight:300;margin-right:2px;}.nome_naveg .ponto{color:var(--accent);}
+    .naveg ul{display:flex;gap:32px;list-style:none;}.naveg a{color:var(--muted);text-decoration:none;font-size:14px;position:relative;padding-bottom:4px;transition:color 0.25s;}.naveg a::after{content:'';position:absolute;left:0;bottom:0;height:1.5px;width:0;background:var(--accent);transition:width 0.25s;}.naveg a:hover{color:var(--text);}.naveg a:hover::after{width:100%;}
+    main{padding-top:calc(var(--nav-h) + 60px);padding-bottom:100px;}
+    .container{max-width:1200px;margin:0 auto;padding:0 24px;}
+    .breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:40px;font-size:13px;color:var(--muted);}.breadcrumb a{color:var(--muted);text-decoration:none;transition:color 0.2s;}.breadcrumb a:hover{color:var(--accent);}.breadcrumb span{color:var(--border-solid);}
+    .btn-voltar{display:inline-flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;font-size:14px;border:1px solid var(--border);border-radius:8px;padding:10px 20px;margin-bottom:48px;transition:color 0.2s,border-color 0.2s;}.btn-voltar:hover{color:var(--text);border-color:rgba(255,255,255,0.2);}
+    .proj-badge{display:inline-flex;align-items:center;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#60a0f0;background:rgba(96,160,240,0.1);border:1px solid rgba(96,160,240,0.25);padding:5px 14px;border-radius:20px;margin-bottom:20px;}
+    .proj-title{font-size:clamp(28px,4vw,46px);font-weight:700;letter-spacing:-1px;line-height:1.1;color:var(--text);margin-bottom:14px;}
+    .proj-desc{font-size:16px;color:var(--muted);max-width:700px;line-height:1.7;}
+    .proj-tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}.tag{font-size:12px;color:var(--muted);background:rgba(255,255,255,0.05);border:1px solid var(--border);padding:5px 12px;border-radius:6px;}
+    .section-label{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;margin-top:48px;}
+    .code-block{background:#0f1117;border:1px solid var(--border-solid);border-radius:16px;overflow:hidden;margin-bottom:32px;box-shadow:0 8px 40px rgba(0,0,0,0.4);}
+    .code-header{background:#1a1d27;padding:14px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.06);}
+    .sql-badge-hd{background:var(--accent);color:#111;font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;}
+    .cte-label{font-size:12px;font-weight:600;color:#a0b0d0;background:rgba(96,130,200,0.12);border:1px solid rgba(96,130,200,0.2);padding:2px 10px;border-radius:4px;}
+    .code-filename{font-size:13px;color:#666;font-family:monospace;margin-left:4px;}
+    .code-body{padding:24px 28px;font-family:'Courier New',monospace;font-size:12.5px;line-height:1.85;overflow-x:auto;white-space:pre;}
+    .sk{color:#7c9ef8;}.sf{color:#fcc717;}.ss{color:#a6e3a1;}.sc{color:#585878;font-style:italic;}.sd{color:#cdd6f4;}.sn{color:#fab387;}.sr{color:#f38ba8;}
+    .detalhe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:48px;}
+    .detalhe-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;display:flex;flex-direction:column;gap:12px;transition:border-color 0.25s,transform 0.25s;}.detalhe-card:hover{border-color:var(--accent-dim);transform:translateY(-3px);}
+    .detalhe-card-titulo{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:0.05em;}
+    .detalhe-card-corpo{font-size:14px;color:var(--muted);line-height:1.75;}.detalhe-card-corpo li{list-style:none;display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;}.detalhe-card-corpo li::before{content:'→';color:var(--accent);flex-shrink:0;font-size:12px;margin-top:2px;}
+    footer{border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;margin-top:80px;}
+    .footer-brand{font-size:13px;color:var(--muted);}.footer-brand strong{color:var(--text);font-weight:500;}.footer-brand .ponto{color:var(--accent);}
+    @media(max-width:768px){.cabeca{padding:0 20px;}.naveg ul{gap:20px;}main{padding-top:calc(var(--nav-h) + 32px);}footer{flex-direction:column;gap:10px;text-align:center;}}
+    ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--border-solid);border-radius:2px;}
+  </style>
+</head>
+<body>
+  <header class="cabeca">
+    <a href="../index.html" class="nome_naveg"><span class="by">by</span> Gabriel Assis Pereira<span class="ponto">.</span></a>
+    <nav class="naveg"><ul>
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="../index.html#sobremim">Sobre Mim</a></li>
+      <li><a href="../index.html#projetos">Projetos</a></li>
+      <li><a href="../index.html#contato">Contato</a></li>
+    </ul></nav>
+  </header>
+  <main>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="../index.html">Início</a><span>/</span>
+        <a href="../index.html#projetos">Projetos</a><span>/</span>
+        <span style="color:var(--text)">Pipeline de Vendas</span>
+      </div>
+      <a href="../index.html#projetos" class="btn-voltar">← Voltar aos projetos</a>
+      <div style="margin-bottom:48px">
+        <div class="proj-badge">SQL · PostgreSQL · Produção</div>
+        <h1 class="proj-title">Pipeline de Vendas Comerciais</h1>
+        <p class="proj-desc">Query de produção que classifica e consolida vendas novas da Dotcom Internet, separando serviços habilitados de pedidos em aguardo, com regras de elegibilidade de status, motivos de cancelamento e exclusão de operações internas — tudo via CTEs encadeadas em PostgreSQL.</p>
+        <div class="proj-tags"><span class="tag">PostgreSQL</span><span class="tag">CTE</span><span class="tag">UNION ALL</span><span class="tag">Regras de negócio</span><span class="tag">Produção</span></div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-body"><span class="sc">-- ═══════════════════════════════════════════════════════════</span>
+<span class="sc">--  CTE: vendas</span>
+<span class="sc">--  Captura serviços novos HABILITADOS e EM AGUARDO</span>
+<span class="sc">--  aplicando regras de negócio de elegibilidade</span>
+<span class="sc">-- ═══════════════════════════════════════════════════════════</span>
+<span class="sk">WITH</span> vendas <span class="sk">AS</span> (
+
+    <span class="sc">-- BLOCO <span class="sn">1</span>: Serviço habilitado (status <span class="sn">11</span>)</span>
+    <span class="sc">-- + Cancelados considerados: status <span class="sn">9</span>, cancelamento &gt; <span class="sn">7</span> dias,</span>
+    <span class="sc">--   exceto motivo <span class="sn">14</span> (teste)</span>
+    <span class="sk">SELECT</span>
+        cliente_servico.data_cadastro::date        <span class="sk">AS</span> data_cadastro,
+        cliente_servico.data_habilitacao::date     <span class="sk">AS</span> data_habilitacao,
+        cliente_servico.data_venda::date           <span class="sk">AS</span> data_venda,
+        cliente_servico.id_cliente,
+        cliente_servico.id_cliente_servico,
+        cliente_servico.origem,
+        origem_servico.descricao                   <span class="sk">AS</span> origem_servico,
+        cliente_servico.id_servico_status,
+        cliente_servico.tipo_cobranca,
+        cliente_servico.valor,
+        cliente.codigo_cliente,
+        cliente.nome_razaosocial,
+        users.name                                 <span class="sk">AS</span> vendedor,
+        servico.descricao                          <span class="sk">AS</span> servico,
+        servico_tecnologia.descricao               <span class="sk">AS</span> tecnologia,
+        servico_status.descricao                   <span class="sk">AS</span> status,
+        endereco_numero.bairro,
+        cidade.nome                                <span class="sk">AS</span> cidade,
+        empresa.nome_fantasia                      <span class="sk">AS</span> empresa
+
+    <span class="sk">FROM</span> cliente_servico
+    <span class="sk">LEFT JOIN</span> servico_status    <span class="sk">ON</span> cliente_servico.id_servico_status = servico_status.id_servico_status
+    <span class="sk">LEFT JOIN</span> cliente           <span class="sk">ON</span> cliente_servico.id_cliente = cliente.id_cliente
+    <span class="sk">LEFT JOIN</span> users             <span class="sk">ON</span> cliente_servico.id_usuario_vendedor = users.id
+    <span class="sk">LEFT JOIN</span> servico           <span class="sk">ON</span> cliente_servico.id_servico = servico.id_servico
+    <span class="sk">LEFT JOIN</span> servico_tecnologia <span class="sk">ON</span> cliente_servico.id_servico_tecnologia = servico_tecnologia.id_servico_tecnologia
+    <span class="sk">LEFT JOIN</span> cliente_servico_endereco <span class="sk">ON</span> cliente_servico.id_cliente_servico = cliente_servico_endereco.id_cliente_servico
+    <span class="sk">LEFT JOIN</span> endereco_numero   <span class="sk">ON</span> cliente_servico_endereco.id_endereco_numero = endereco_numero.id_endereco_numero
+    <span class="sk">LEFT JOIN</span> cidade            <span class="sk">ON</span> endereco_numero.id_cidade = cidade.id_cidade
+    <span class="sk">LEFT JOIN</span> forma_cobranca    <span class="sk">ON</span> cliente_servico.id_forma_cobranca = forma_cobranca.id_forma_cobranca
+    <span class="sk">LEFT JOIN</span> empresa           <span class="sk">ON</span> forma_cobranca.id_empresa = empresa.id_empresa
+    <span class="sk">LEFT JOIN</span> origem_servico    <span class="sk">ON</span> cliente_servico.id_origem_servico = origem_servico.id_origem_servico
+
+    <span class="sk">WHERE</span> <span class="sn">1</span>=<span class="sn">1</span>
+        <span class="sk">AND</span> cliente_servico.data_habilitacao::date <span class="sk">BETWEEN</span> <span class="ss">'<span class="sn">2025</span>-<span class="sn">01</span>-<span class="sn">01</span>'</span> <span class="sk">AND</span> current_date
+        <span class="sk">AND</span> cliente_servico.origem = <span class="ss">'novo'</span>
+        <span class="sk">AND</span> cliente_servico_endereco.tipo = <span class="ss">'instalacao'</span>
+
+        <span class="sc">-- Elegibilidade de status: habilitado (<span class="sn">11</span>) ou cancelado considerado (<span class="sn">9</span>)</span>
+        <span class="sk">AND</span> (
+            cliente_servico.id_servico_status = <span class="sn">11</span>
+            <span class="sk">OR</span> (
+                cliente_servico.id_servico_status = <span class="sn">9</span>
+                <span class="sk">AND</span> (cliente_servico.data_cancelamento::date
+                     - cliente_servico.data_habilitacao::date) &gt; <span class="sn">7</span>
+                <span class="sk">AND</span> cliente_servico.id_motivo_cancelamento <span class="sk">NOT IN</span> (<span class="sn">14</span>)
+            )
+        )
+        <span class="sc">-- Exclusão de motivos de cancelamento inelegíveis</span>
+        <span class="sk">AND</span> (cliente_servico.id_motivo_cancelamento <span class="sk">IS NULL</span>
+             <span class="sk">OR</span> cliente_servico.id_motivo_cancelamento <span class="sk">NOT IN</span> (<span class="sn">4</span>,<span class="sn">10</span>,<span class="sn">15</span>,<span class="sn">16</span>))
+        <span class="sc">-- Exclusão de clientes e vendedores internos</span>
+        <span class="sk">AND</span> cliente_servico.id_cliente <span class="sk">NOT IN</span> (<span class="sn">13515</span>)
+        <span class="sk">AND</span> cliente.codigo_cliente <span class="sk">NOT IN</span> (<span class="sn">12412</span>,<span class="sn">10384</span>,<span class="sn">11370</span>)
+        <span class="sk">AND</span> cliente_servico.id_usuario_vendedor <span class="sk">NOT IN</span> (<span class="sn">1</span>,<span class="sn">79</span>,<span class="sn">81</span>,<span class="sn">82</span>,<span class="sn">88</span>,<span class="sn">92</span>,<span class="sn">135</span>,<span class="sn">142</span>,<span class="sn">371</span>)
+
+    <span class="sk">UNION ALL</span>
+
+    <span class="sc">-- BLOCO <span class="sn">2</span>: Aguardando instalação (status <span class="sn">6</span>)</span>
+    <span class="sc">-- Usa data_venda como proxy de habilitação</span>
+    <span class="sk">SELECT</span>
+        cliente_servico.data_cadastro::date,
+        cliente_servico.data_venda::date,   <span class="sc">-- proxy: ainda não habilitado</span>
+        cliente_servico.data_venda::date,
+        cliente_servico.id_cliente,
+        cliente_servico.id_cliente_servico,
+        cliente_servico.origem,
+        origem_servico.descricao,
+        cliente_servico.id_servico_status,
+        cliente_servico.tipo_cobranca,
+        cliente_servico.valor,
+        cliente.codigo_cliente,
+        cliente.nome_razaosocial,
+        users.name,
+        servico.descricao,
+        servico_tecnologia.descricao,
+        servico_status.descricao,
+        endereco_numero.bairro,
+        cidade.nome,
+        empresa.nome_fantasia
+
+    <span class="sk">FROM</span> cliente_servico
+    <span class="sk">LEFT JOIN</span> servico_status    <span class="sk">ON</span> cliente_servico.id_servico_status = servico_status.id_servico_status
+    <span class="sk">LEFT JOIN</span> cliente           <span class="sk">ON</span> cliente_servico.id_cliente = cliente.id_cliente
+    <span class="sk">LEFT JOIN</span> users             <span class="sk">ON</span> cliente_servico.id_usuario_vendedor = users.id
+    <span class="sk">LEFT JOIN</span> servico           <span class="sk">ON</span> cliente_servico.id_servico = servico.id_servico
+    <span class="sk">LEFT JOIN</span> servico_tecnologia <span class="sk">ON</span> cliente_servico.id_servico_tecnologia = servico_tecnologia.id_servico_tecnologia
+    <span class="sk">LEFT JOIN</span> cliente_servico_endereco <span class="sk">ON</span> cliente_servico.id_cliente_servico = cliente_servico_endereco.id_cliente_servico
+    <span class="sk">LEFT JOIN</span> endereco_numero   <span class="sk">ON</span> cliente_servico_endereco.id_endereco_numero = endereco_numero.id_endereco_numero
+    <span class="sk">LEFT JOIN</span> cidade            <span class="sk">ON</span> endereco_numero.id_cidade = cidade.id_cidade
+    <span class="sk">LEFT JOIN</span> forma_cobranca    <span class="sk">ON</span> cliente_servico.id_forma_cobranca = forma_cobranca.id_forma_cobranca
+    <span class="sk">LEFT JOIN</span> empresa           <span class="sk">ON</span> forma_cobranca.id_empresa = empresa.id_empresa
+    <span class="sk">LEFT JOIN</span> origem_servico    <span class="sk">ON</span> cliente_servico.id_origem_servico = origem_servico.id_origem_servico
+
+    <span class="sk">WHERE</span> <span class="sn">1</span>=<span class="sn">1</span>
+        <span class="sk">AND</span> cliente_servico.data_venda::date <span class="sk">BETWEEN</span> <span class="ss">'<span class="sn">2025</span>-<span class="sn">01</span>-<span class="sn">01</span>'</span> <span class="sk">AND</span> current_date
+        <span class="sk">AND</span> cliente_servico.id_servico_status = <span class="sn">6</span>
+        <span class="sk">AND</span> cliente_servico.origem = <span class="ss">'novo'</span>
+        <span class="sk">AND</span> cliente_servico_endereco.tipo = <span class="ss">'instalacao'</span>
+        <span class="sk">AND</span> cliente_servico.id_cliente <span class="sk">NOT IN</span> (<span class="sn">13515</span>)
+        <span class="sk">AND</span> cliente.codigo_cliente <span class="sk">NOT IN</span> (<span class="sn">12412</span>,<span class="sn">10384</span>,<span class="sn">11370</span>)
+        <span class="sk">AND</span> cliente_servico.id_usuario_vendedor <span class="sk">NOT IN</span> (<span class="sn">1</span>,<span class="sn">79</span>,<span class="sn">81</span>,<span class="sn">82</span>,<span class="sn">88</span>,<span class="sn">92</span>,<span class="sn">135</span>,<span class="sn">142</span>,<span class="sn">371</span>)
+)
+
+<span class="sc">-- <span class="sk">SELECT</span> FINAL</span>
+<span class="sk">SELECT</span> * <span class="sk">FROM</span> vendas
+<span class="sk">ORDER BY</span> data_habilitacao <span class="sk">DESC</span>;</div>
+      </div><div class="detalhe-grid"><div class="detalhe-card"><div class="detalhe-card-titulo">Contexto</div><div class="detalhe-card-corpo">Query em execução diária no ambiente de produção da Dotcom Internet. Alimenta o dashboard comercial em Power BI com as vendas do dia, permitindo acompanhamento em tempo real por vendedor, cidade, tecnologia e empresa.</div></div><div class="detalhe-card"><div class="detalhe-card-titulo">Técnicas Utilizadas</div><ul class="detalhe-card-corpo"><li>CTEs (WITH) para organizar a lógica em etapas legíveis</li><li>UNION ALL para consolidar serviços habilitados + em aguardo</li><li>Filtros de elegibilidade por status e motivo de cancelamento</li><li>Exclusão de clientes e vendedores internos via NOT IN</li></ul></div><div class="detalhe-card"><div class="detalhe-card-titulo">Regras de Negócio</div><ul class="detalhe-card-corpo"><li>Status 11 = Habilitado (venda confirmada)</li><li>Status 9 com cancelamento > 7 dias = considerado venda</li><li>Status 6 = Aguardando instalação (venda prospectiva)</li><li>Motivos 4, 10, 14, 15, 16 excluídos (cancelamentos inelegíveis)</li></ul></div><div class="detalhe-card"><div class="detalhe-card-titulo">Impacto</div><ul class="detalhe-card-corpo"><li>Base do relatório diário de performance comercial</li><li>Elimina contagem duplicada de reconexões e trocas internas</li><li>Reduz o tempo de geração do relatório de horas para segundos</li><li>Reutilizada como CTE dependente no pipeline de reconexões</li></ul></div></div>
+    </div>
+  </main>
+  <footer>
+    <div class="footer-brand"><span style="font-size:11px;color:var(--muted)">by</span> <strong>Gabriel Assis Pereira</strong><span class="ponto">.</span></div>
+    <a href="../index.html#projetos" style="font-size:13px;color:var(--muted);text-decoration:none" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">← Todos os projetos</a>
+  </footer>
+</body>
+</html>
