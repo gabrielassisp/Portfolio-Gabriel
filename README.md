@@ -37,3 +37,7 @@ A galeria permite abrir os arquivos de imagem originais. As simulações didáti
 ## Código junto das capturas
 
 Os oito projetos possuem trechos extraídos dos arquivos originais, com explicação e ligação para o arquivo correspondente no GitHub. A galeria oferece abas Imagens reais e Código do projeto; as páginas de estudo têm blocos expansíveis. No Power BI, o trecho mostra a integração HTML, sem apresentar código DAX inexistente no repositório. Referências de repositórios privados continuam identificadas.
+
+## Seleção principal
+
+A página inicial e a navegação da galeria destacam seis projetos: plataforma Python/dbt, monitor ETL, Brazil Economic Pipeline, pipeline comercial SQL, validação documental e ETL de vendas. Dashboard Comercial e ChurnIQ permanecem acessíveis pelos endereços existentes, fora da seleção principal.
