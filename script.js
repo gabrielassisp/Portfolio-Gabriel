@@ -2,6 +2,7 @@
 (function () {
   const canvas = document.getElementById('hero-canvas');
   if (!canvas) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const ctx = canvas.getContext('2d');
 
   function resize() {
@@ -22,6 +23,7 @@
   let last = performance.now();
 
   function draw(now) {
+    if (document.hidden) { last=now; requestAnimationFrame(draw); return; }
     const dt = now - last;
     last = now;
 
@@ -62,7 +64,7 @@ document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 // ── Nav ativo conforme seção visível ──────────────────────
 const secoes = document.querySelectorAll('section[id]');
 const links  = document.querySelectorAll('.naveg a');
-const NAV_H  = document.getElementById('header').offsetHeight;
+const NAV_H  = document.querySelector('.cabeca').offsetHeight;
 
 secoes.forEach(s => {
   new IntersectionObserver(entries => {
@@ -77,79 +79,24 @@ secoes.forEach(s => {
 });
 
 // ── Animação de entrada do hero ───────────────────────────
-Array.from(document.querySelector('.apresentacao').children).forEach((el, i) => {
+Array.from(document.querySelector('.apresentacao').children).filter(() => !matchMedia('(prefers-reduced-motion: reduce)').matches).forEach((el, i) => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(18px)';
   el.style.transition = `opacity .65s ease ${i * .1}s, transform .65s ease ${i * .1}s`;
   setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'none'; }, 100 + i * 80);
 });
 
-// ── Formulário de contato ─────────────────────────────────
-// ── Formulário de contato ─────────────────────────────────
-document.getElementById('btn-enviar').addEventListener('click', async function () {
-  const nome    = document.querySelector('input[placeholder="Seu nome"]');
-  const email   = document.querySelector('input[placeholder="seu@email.com"]');
-  const assunto = document.querySelector('input[placeholder="Oportunidade, parceria, projeto..."]');
-  const mensagem = document.querySelector('.form-textarea');
-  const btn = this;
 
-  // Validação básica
-  if (!nome.value || !email.value || !mensagem.value) {
-    btn.textContent = 'Preencha os campos obrigatórios';
-    btn.style.background = '#e74c3c';
-    btn.style.color = '#fff';
-    setTimeout(() => {
-      btn.textContent = 'Enviar mensagem →';
-      btn.style.background = '';
-      btn.style.color = '';
-    }, 3000);
-    return;
-  }
-
-  btn.textContent = 'Enviando...';
-  btn.disabled = true;
-
-  try {
-    const res = await fetch('https://formspree.io/f/mvzwyppa', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nome: nome.value,
-        email: email.value,
-        assunto: assunto.value,
-        mensagem: mensagem.value,
-      }),
-    });
-
-    if (res.ok) {
-      btn.textContent = 'Mensagem enviada ✓';
-      btn.style.background = '#28c840';
-      btn.style.color = '#fff';
-
-      // Limpa os campos
-      nome.value = '';
-      email.value = '';
-      assunto.value = '';
-      mensagem.value = '';
-
-      setTimeout(() => {
-        btn.textContent = 'Enviar mensagem →';
-        btn.style.background = '';
-        btn.style.color = '';
-        btn.disabled = false;
-      }, 3500);
-    } else {
-      throw new Error('Erro no envio');
-    }
-  } catch {
-    btn.textContent = 'Erro ao enviar. Tente novamente.';
-    btn.style.background = '#e74c3c';
-    btn.style.color = '#fff';
-    setTimeout(() => {
-      btn.textContent = 'Enviar mensagem →';
-      btn.style.background = '';
-      btn.style.color = '';
-      btn.disabled = false;
-    }, 3500);
-  }
-});
+// Accessible mobile navigation.
+const menuButton=document.querySelector('.menu-toggle');
+const navigation=document.querySelector('.naveg');
+function closeMenu(){menuButton.setAttribute('aria-expanded','false');navigation.classList.remove('is-open');}
+menuButton.addEventListener('click',()=>{const open=menuButton.getAttribute('aria-expanded')!=='true';menuButton.setAttribute('aria-expanded',String(open));navigation.classList.toggle('is-open',open);});
+navigation.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
+document.addEventListener('keydown',event=>{if(event.key==='Escape' && menuButton.getAttribute('aria-expanded')==='true'){closeMenu();menuButton.focus();}});
+window.addEventListener('resize',()=>{if(innerWidth>700)closeMenu();});
+// Project filters work locally and retain all projects in the HTML.
+document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{let count=0;document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));document.querySelectorAll('.card[data-category]').forEach(card=>{card.hidden=button.dataset.filter!=='all' && card.dataset.category!==button.dataset.filter;if(!card.hidden){count++;card.classList.add('visible');}});document.getElementById('project-count').textContent=count+' '+(count===1?'projeto':'projetos');}));
+// Keep the existing delivery service; rely on native field validation.
+const form=document.getElementById('contact-form');
+form.addEventListener('submit',async event=>{event.preventDefault();const button=document.getElementById('btn-enviar');const status=document.getElementById('form-feedback');if(button.disabled)return;const data=Object.fromEntries(new FormData(form));button.disabled=true;button.textContent='Enviando…';status.textContent='';try{const response=await fetch('https://formspree.io/f/mvzwyppa',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)});if(!response.ok)throw Error('Falha no envio');form.reset();status.textContent='Mensagem enviada. Obrigado pelo contato!';status.dataset.state='success';}catch{status.textContent='Não foi possível enviar. Tente novamente ou use o e-mail ao lado.';status.dataset.state='error';}finally{button.disabled=false;button.textContent='Enviar mensagem →';}});

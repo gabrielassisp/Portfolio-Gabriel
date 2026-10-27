@@ -11,6 +11,7 @@
 </head>
 
 <body>
+<a class="skip-link" href="#landing">Pular para o conteúdo</a>
 
   <div id="header">
     <!-- sections/header.html -->
@@ -18,12 +19,10 @@
       <a href="#home" class="nome_naveg">
         <span class="by">by</span> Gabriel Assis Pereira<span class="ponto">.</span>
       </a>
-      <nav class="naveg">
+      <button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false">Menu <span aria-hidden="true">☰</span></button>
+<nav class="naveg" id="main-nav" aria-label="Navegação principal">
         <ul>
-          <li><a href="#home">Inicio</a></li>
-          <li><a href="#sobremim">Sobre Mim</a></li>
-          <li><a href="#projetos">Projetos</a></li>
-          <li><a href="#contato">Contato</a></li>
+          <li><a href="#home">Início</a></li><li><a href="#projetos">Projetos</a></li><li><a href="#competencias">Competências</a></li><li><a href="#sobremim">Trajetória</a></li><li><a href="#contato">Contato</a></li>
         </ul>
       </nav>
     </header>
@@ -35,17 +34,17 @@
       <!-- sections/home.html -->
       <canvas id="hero-canvas"></canvas>
       <div class="apresentacao">
-        <h1 class="gradiente">Gabriel Assis Pereira</h1>
-        <h2 class="subtitulo">Foco em Engenharia de Dados</h2>
-        <p class="texto_apresentacao">Construo pipelines e integrações com Python, SQL e dbt — da ingestão ao consumo analítico.</p>
+        <p class="hero-kicker">PYTHON · SQL · ENGENHARIA DE DADOS</p><h1 class="gradiente">Gabriel Assis Pereira</h1>
+        <h2 class="subtitulo">Da origem ao dado pronto para usar.</h2>
+        <p class="texto_apresentacao">Analista de Dados com foco em engenharia de dados. Integro APIs, estruturo transformações com dbt e acompanho cada execução dos pipelines.</p>
 
         <div class="botoes">
-          <a href="#projetos" class="button1">Ver projetos &nbsp;⮟</a>
+          <a href="#projetos" class="button1">Explorar projetos &nbsp;↘</a>
           <a href="arquivos/curriculo.pdf" download class="button2">Baixar Currículo</a>
         </div>
 
         <div class="social-links">
-          <a href="https://www.linkedin.com/in/gabriel-assispereira" target="_blank" rel="noopener noreferrer" class="link"
+          <a href="https://www.linkedin.com/in/gabriel-assis-pereira-858b24280" target="_blank" rel="noopener noreferrer" class="link"
             title="LinkedIn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
@@ -69,15 +68,239 @@
             </svg>
           </a>
         </div>
-      </div>
+      <div class="hero-overview"><span>Ingestão via APIs</span><i aria-hidden="true">→</i><span>Modelagem SQL / dbt</span><i aria-hidden="true">→</i><span>Qualidade e operação</span></div></div>
     </section>
 
-    <section id="sobremim">
+    
+
+    <section id="projetos">
+      <!-- sections/projetos.html -->
+      <div class="container">
+
+        <div class="proj-header-row fade-in">
+          <div>
+            <p class="section-index">01 / PROJETOS</p><h2 class="sec-title">Projetos que conectam os dados</h2><p class="section-copy">Integração, transformação e operação — com os detalhes de cada implementação.</p>
+          </div>
+          <a href="https://github.com/gabrielassisp" target="_blank" rel="noopener noreferrer" class="proj-github-link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+            </svg>
+            Ver GitHub
+          </a>
+        </div>
+
+        <div class="project-toolbar"><div class="project-filters" role="group" aria-label="Filtrar projetos"><button type="button" data-filter="all" aria-pressed="true">Todos</button><button type="button" data-filter="pipelines" aria-pressed="false">Pipelines</button><button type="button" data-filter="sql" aria-pressed="false">SQL</button><button type="button" data-filter="operacao" aria-pressed="false">Operação</button><button type="button" data-filter="automacao" aria-pressed="false">Automação</button><button type="button" data-filter="bi" aria-pressed="false">Analytics / BI</button></div><p id="project-count" role="status">8 projetos</p></div><div class="grid" id="project-grid">
+<article data-category="pipelines" class="card fade-in"><div class="media-container" style="background:#1e1e2e;display:flex;align-items:center;justify-content:center"><div style="width:88%;height:88%;background:#1e1e2e;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3)"><div style="background:#181825;padding:10px 14px;display:flex;gap:6px;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840"></span><span style="font-size:11px;color:#aaa;margin-left:10px;font-family:monospace">plataforma-dados · arquitetura</span></div><div style="padding:14px 16px;font-family:monospace;font-size:11px;line-height:1.8;color:#cdd6f4"><div style="white-space:pre;color:#a6adc8"># Ingestão e transformação</div><div style="white-space:pre;color:#cdd6f4">Zoho / Huggy / Meta</div><div style="white-space:pre;color:#cdd6f4">          ↓</div><div style="white-space:pre;color:#cdd6f4">Python → Bronze</div><div style="white-space:pre;color:#cdd6f4">          ↓</div><div style="white-space:pre;color:#cdd6f4">dbt → Silver → Gold</div></div></div><div class="media-overlay"><a href="projetos/plataforma-dados.html" class="pill" style="padding:12px 24px">Explorar Projeto</a></div></div><div class="content"><p class="project-kind">PIPELINES / DBT</p><div class="content__top"><h3 class="title">Plataforma de dados com Python + dbt</h3><span class="pill">Python + dbt</span></div><p class="desc">Quatro fluxos para negócios e histórico Zoho, chats Huggy e anúncios Meta. Ingestão Python e transformações dbt organizadas em Bronze, Silver e Gold.</p><div class="meta"><div class="tags"><span class="tag">Python</span><span class="tag">PostgreSQL</span><span class="tag">dbt</span><span class="tag">Docker</span></div><a href="projetos/plataforma-dados.html" class="btn-link">Ver detalhes ➔</a></div></div></article>
+<article data-category="operacao" class="card fade-in"><div class="media-container" style="background:#1e1e2e;display:flex;align-items:center;justify-content:center"><div style="width:88%;height:88%;background:#1e1e2e;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3)"><div style="background:#181825;padding:10px 14px;display:flex;gap:6px;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840"></span><span style="font-size:11px;color:#aaa;margin-left:10px;font-family:monospace">monitor-etl · arquitetura</span></div><div style="padding:14px 16px;font-family:monospace;font-size:11px;line-height:1.8;color:#cdd6f4"><div style="white-space:pre;color:#a6adc8"># Rastreabilidade de cargas</div><div style="white-space:pre;color:#cdd6f4">n8n / interface → API</div><div style="white-space:pre;color:#cdd6f4">          ↓</div><div style="white-space:pre;color:#cdd6f4">Fila → execução Python</div><div style="white-space:pre;color:#cdd6f4">          ↓</div><div style="white-space:pre;color:#cdd6f4">Status + logs → SQLite</div></div></div><div class="media-overlay"><a href="projetos/monitor-etl.html" class="pill" style="padding:12px 24px">Explorar Projeto</a></div></div><div class="content"><p class="project-kind">OPERAÇÃO / LOGS</p><div class="content__top"><h3 class="title">Monitor de execuções ETL</h3><span class="pill">FastAPI</span></div><p class="desc">Interface para consultar fila, histórico e logs dos jobs disparados pela API ou pelo n8n. Execução local com timeout e cancelamento.</p><div class="meta"><div class="tags"><span class="tag">FastAPI</span><span class="tag">SQLite</span><span class="tag">Python</span><span class="tag">n8n</span></div><a href="projetos/monitor-etl.html" class="btn-link">Ver detalhes ➔</a></div></div></article>
+<article data-category="pipelines" class="card fade-in d3">
+            <div class="media-container"
+              style="background:#0d1117;display:flex;align-items:center;justify-content:center;">
+              <div
+                style="width:88%;height:88%;background:#0d1117;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3);">
+                <div
+                  style="background:#161b22;padding:10px 14px;display:flex;gap:6px;align-items:center;border-bottom:1px solid rgba(255,255,255,.06);">
+                  <span style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></span>
+                  <span style="width:10px;height:10px;border-radius:50%;background:#febc2e"></span>
+                  <span style="width:10px;height:10px;border-radius:50%;background:#28c840"></span>
+                  <span style="font-size:11px;color:#666;margin-left:10px;font-family:monospace">pipeline.py</span>
+                </div>
+                <div style="padding:14px 16px;font-family:monospace;font-size:11px;line-height:1.8;color:#cdd6f4">
+                  <div><span style="color:#6c7086"># Bronze → Silver → Gold</span></div>
+                  <div><span style="color:#cba6f7">from</span> ingestion <span style="color:#cba6f7">import</span>
+                    run_ibge_collection</div>
+                  <div><span style="color:#cba6f7">from</span> quality <span style="color:#cba6f7">import</span>
+                    run_all_validations</div>
+                  <div>&nbsp;</div>
+                  <div><span style="color:#cba6f7">def</span> <span style="color:#89b4fa">run_pipeline</span>():</div>
+                  <div>&nbsp;&nbsp;ibge = <span style="color:#89b4fa">run_ibge_collection</span>()</div>
+                  <div>&nbsp;&nbsp;<span style="color:#89b4fa">run_all_validations</span>()</div>
+                  <div>&nbsp;&nbsp;<span style="color:#89b4fa">build_gold_layer</span>()</div>
+                </div>
+              </div>
+            </div>
+            <div class="content"><p class="project-kind">INGESTÃO / QUALIDADE</p>
+              <div class="content__top">
+                <h3 class="title">Brazil Economic Pipeline</h3><span class="pill"
+                  style="background:rgba(192,96,240,.12);color:#c060f0;border-color:rgba(192,96,240,.25)">Python</span>
+              </div>
+              <p class="desc">Pipeline com arquitetura medallion (Bronze → Silver → Gold) integrando IBGE, Banco Central
+                e World Bank — com validação de qualidade formal e Índice de Stress Econômico.</p>
+              <div class="meta">
+                <div class="tags">
+                  <span class="tag">pandas</span>
+                  <span class="tag">SQLAlchemy</span>
+                  <span class="tag">Data quality</span>
+                  <span class="tag">IBGE API</span>
+                  <span class="tag">pytest</span>
+                </div>
+                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                  <a href="projetos/pipeline_ibge.html" class="btn-link">Ver detalhes ➔</a>
+                  <a href="https://github.com/gabrielassisp/Brazil-Pipeline-Project" target="_blank" rel="noopener noreferrer" class="btn-link" style="opacity:.7">GitHub ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 1: Faturamento -->
+          <article data-category="sql" class="card fade-in d4">
+            <div class="media-container"
+              style="background:#0f1117;display:flex;align-items:center;justify-content:center;">
+              <div style="width:88%;height:88%;background:#0f1117;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3);">
+                <div style="background:#1a1d27;padding:10px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.06);">
+                  <span style="background:#fcc717;color:#111;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px">SQL</span>
+                  <span style="font-size:11px;color:#666;font-family:monospace">pipeline_comercial.sql</span>
+                </div>
+                <div style="padding:12px 16px;font-family:monospace;font-size:11px;line-height:1.8">
+                  <div><span style="color:#585878;font-style:italic">-- Tipo 1: Inativo → Ativo via regex</span></div>
+                  <div><span style="color:#7c9ef8">JOIN</span> cliente_historico ch_novo</div>
+                  <div>&nbsp;&nbsp;<span style="color:#7c9ef8">ON</span> <span style="color:#fcc717">substring</span>(ch_novo.historico</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7c9ef8">FROM</span> <span style="color:#a6e3a1">'servi[çc]o de n[úu]mero \((\d+)\)'</span>)</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;::int = cliente_servico.numero_plano</div>
+                  <div><span style="color:#7c9ef8">WHERE</span> id_servico_status <span style="color:#7c9ef8">IN</span> (<span style="color:#fab387">11</span>, <span style="color:#fab387">6</span>)</div>
+                  <div>&nbsp;&nbsp;<span style="color:#7c9ef8">AND</span> ch_inativo.historico <span style="color:#f38ba8">~*</span> <span style="color:#a6e3a1">'Inativo para Ativo'</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="content"><p class="project-kind">SQL / MODELAGEM</p>
+              <div class="content__top">
+                <h3 class="title">Pipeline Comercial — Vendas & Reconexões</h3>
+                <span class="pill" style="background:rgba(96,160,240,.12);color:#60a0f0;border-color:rgba(96,160,240,.25)">SQL</span>
+              </div>
+              <p class="desc">Query em produção que eliminou inconsistências que custavam <strong>dias de trabalho por semana</strong> à equipe. O dashboard comercial — usado diariamente pelo diretor, 3 gerentes e 5 coordenadoras regionais — passou a contar com indicadores mais consistentes.</p>
+              <div class="meta">
+                <div class="tags">
+                  <span class="tag">PostgreSQL</span>
+                  <span class="tag">Regex ~*</span>
+                  <span class="tag">CTEs</span>
+                  <span class="tag">LAG</span>
+                  <span class="tag">Produção</span>
+                </div>
+                <a href="projetos/sql_pipeline_reconexoes.html" class="btn-link">Ver detalhes ➔</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 2: ChurnIQ JS Dashboard -->
+          <article data-category="automacao" class="card fade-in"><div class="media-container" style="background:#1e1e2e;display:flex;align-items:center;justify-content:center"><div style="width:88%;height:88%;background:#1e1e2e;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3)"><div style="background:#181825;padding:10px 14px;display:flex;gap:6px;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840"></span><span style="font-size:11px;color:#aaa;margin-left:10px;font-family:monospace">validacao-documental · arquitetura</span></div><div style="padding:14px 16px;font-family:monospace;font-size:11px;line-height:1.8;color:#cdd6f4"><div style="white-space:pre;color:#a6adc8"># Integração documental</div><div style="white-space:pre;color:#cdd6f4">Zoho → Google Drive</div><div style="white-space:pre;color:#cdd6f4">          ↓</div><div style="white-space:pre;color:#cdd6f4">Extração / OCR → checklist</div><div style="white-space:pre;color:#cdd6f4">          ↓</div><div style="white-space:pre;color:#cdd6f4">Notas, tags e planilhas</div></div></div><div class="media-overlay"><a href="projetos/validacao-documental.html" class="pill" style="padding:12px 24px">Explorar Projeto</a></div></div><div class="content"><p class="project-kind">AUTOMAÇÃO / IA</p><div class="content__top"><h3 class="title">Validação documental com IA</h3><span class="pill">n8n</span></div><p class="desc">Integração de Zoho, Drive, planilhas e Gemini para extração e conferência documental. Workflow versionado; integração ponta a ponta a validar.</p><div class="meta"><div class="tags"><span class="tag">n8n</span><span class="tag">APIs</span><span class="tag">Gemini</span><span class="tag">Google Drive</span></div><a href="projetos/validacao-documental.html" class="btn-link">Ver detalhes ➔</a></div></div></article>
+
+          <!-- CARD 3: Python - Sales Dashboard ETL -->
+          <article data-category="pipelines" class="card fade-in d3">
+            <div class="media-container"
+              style="background:#1e1e2e;display:flex;align-items:center;justify-content:center;">
+              <div
+                style="width:88%;height:88%;background:#1e1e2e;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3);">
+                <div
+                  style="background:#181825;padding:10px 14px;display:flex;gap:6px;align-items:center;border-bottom:1px solid rgba(255,255,255,.06);">
+                  <span style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></span>
+                  <span style="width:10px;height:10px;border-radius:50%;background:#febc2e"></span>
+                  <span style="width:10px;height:10px;border-radius:50%;background:#28c840"></span>
+                  <span style="font-size:11px;color:#666;margin-left:10px;font-family:monospace">etl.py</span>
+                </div>
+                <div style="padding:14px 16px;font-family:monospace;font-size:11px;line-height:1.8;color:#cdd6f4">
+                  <div><span style="color:#6c7086"># Pipeline ETL + Dashboard de Vendas</span></div>
+                  <div><span style="color:#cba6f7">from</span> sqlalchemy <span style="color:#cba6f7">import</span>
+                    create_engine</div>
+                  <div><span style="color:#cba6f7">import</span> pandas <span style="color:#cba6f7">as</span> pd,
+                    schedule</div>
+                  <div>&nbsp;</div>
+                  <div><span style="color:#cba6f7">def</span> <span style="color:#89b4fa">rodar_etl</span>():</div>
+                  <div>&nbsp;&nbsp;df = <span style="color:#89b4fa">extrair_produtos</span>()</div>
+                  <div>&nbsp;&nbsp;<span style="color:#89b4fa">carregar_banco</span>(df, engine)</div>
+                  <div>&nbsp;</div>
+                  <div>schedule.<span style="color:#89b4fa">every</span>(<span
+                      style="color:#fab387">60</span>).minutes.<span style="color:#89b4fa">do</span>(rodar_etl)</div>
+                </div>
+              </div>
+            </div>
+            <div class="content"><p class="project-kind">ETL / ANALYTICS</p>
+              <div class="content__top">
+                <h3 class="title">ETL Vendas Dashboard </h3><span class="pill"
+                  style="background:rgba(192,96,240,.12);color:#c060f0;border-color:rgba(192,96,240,.25)">Python</span>
+              </div>
+              <p class="desc">Pipeline ETL automatizado que extrai dados de API pública, persiste em SQLite via ORM e
+                expõe um dashboard interativo com Streamlit — atualizado a cada 60 minutos.</p>
+              <div class="meta">
+                <div class="tags">
+                  <span class="tag">pandas</span>
+                  <span class="tag">SQLAlchemy</span>
+                  <span class="tag">Streamlit</span>
+                  <span class="tag">ETL</span>
+                  <span class="tag">pytest</span>
+                </div>
+                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                  <a href="projetos/python_app.html" class="btn-link">Ver detalhes ➔</a>
+                  <a href="https://github.com/gabrielassisp/Projeto-App-Python" target="_blank" rel="noopener noreferrer" class="btn-link" style="opacity:.7">GitHub ↗</a>
+                  <a href="https://projeto-app-python-gs2mysp2ppn2d3rvoncgqw.streamlit.app" target="_blank" rel="noopener noreferrer" class="btn-link" style="opacity:.7">Demo ao vivo ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 4: Python -->
+          <article data-category="bi" class="card fade-in d1">
+            <div class="media-container">
+              <iframe loading="lazy" title="Dashboard Comercial" width="600" height="373.5"
+                src="https://app.powerbi.com/view?r=eyJrIjoiNDBlMWIwYTMtYmI1Ni00NDZjLTgxMDUtNWM3NTk3OTllMjk0IiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9"
+                frameborder="0" allowFullScreen="true"></iframe>
+              <div class="media-overlay">
+                <a href="projetos/bi_dashboard_comercial.html" class="pill" style="padding:12px 24px">Explorar
+                  Projeto</a>
+              </div>
+            </div>
+            <div class="content"><p class="project-kind">BI / CONSUMO</p>
+              <div class="content__top">
+                <h3 class="title">Dashboard Comercial</h3><span class="pill">Power BI</span>
+              </div>
+              <p class="desc">Análise end-to-end de e-commerce com R$13,6M em receita, 99.4K pedidos e 3.095 vendedores
+                —
+                cobrindo visão executiva, logística e performance de vendedores com 97 medidas DAX e KPIs HTML
+                customizados.</p>
+              <div class="meta">
+                <div class="tags"><span class="tag">DAX</span><span class="tag">ETL</span><span class="tag">HTML
+                    KPIs</span><span class="tag">Modelagem</span></div>
+                <a href="projetos/bi_dashboard_comercial.html" class="btn-link">Ver detalhes ➔</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 5: Pipeline Comercial SQL (produção) -->
+          <article data-category="bi" class="card fade-in d1">
+            <div class="media-container">
+              <img
+                src="imagens/churniq-preview.png"
+                alt="ChurnIQ Dashboard Preview"
+                style="width:100%;height:100%;object-fit:contain;object-position:center top;display:block;background:#FAF9F6;">
+              <div class="media-overlay">
+                <a href="projetos/bi_churn.html" class="pill" style="padding:12px 24px">Explorar Projeto</a>
+              </div>
+            </div>
+            <div class="content"><p class="project-kind">ANALYTICS / JAVASCRIPT</p>
+              <div class="content__top">
+                <h3 class="title">ChurnIQ Dashboard</h3><span class="pill">JavaScript</span>
+              </div>
+              <p class="desc">
+ Análise de churn sobre 7.043 clientes Telco, revelando que contratos mensais cancelam 3× mais que contratos anuais. Pipeline completo no browser: parse CSV, cálculo de métricas e visualizações com Canvas API, sem frameworks.</p>
+              <div class="meta">
+                <div class="tags"><span class="tag">JS</span><span class="tag">Churn</span><span class="tag">Canvas API</span></div>
+                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                  <a href="projetos/bi_churn.html" class="btn-link">Ver detalhes ➔</a>
+                  <a href="https://github.com/gabrielassisp/Dashboard-Churn-JS" target="_blank" rel="noopener noreferrer" class="btn-link" style="opacity:.7">GitHub ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+<section id="competencias"><div class="container"><div class="section-intro fade-in"><p class="section-index">02 / COMPETÊNCIAS</p><h2 class="sec-title">O que sustenta cada pipeline</h2><p class="section-copy">Ferramentas conectadas a decisões de implementação, da extração à investigação de falhas.</p></div><div class="capability-grid"><article class="capability-card fade-in"><span>01</span><h3>Ingestão e integração</h3><p>Autenticação, paginação e normalização de respostas para integrar fontes de negócio.</p><small>Python · APIs REST · n8n</small></article><article class="capability-card fade-in"><span>02</span><h3>Modelagem e transformação</h3><p>Camadas Bronze, Silver e Gold com dependências explícitas e modelos para consumo analítico.</p><small>SQL · PostgreSQL · dbt</small></article><article class="capability-card fade-in"><span>03</span><h3>Qualidade de dados</h3><p>Verificações de integridade nos fluxos e versionamento de código e transformações.</p><small>Testes · Validações · Git</small></article><article class="capability-card fade-in"><span>04</span><h3>Execução e rastreabilidade</h3><p>Processos em containers, fila compartilhada, histórico persistente e logs para diagnóstico.</p><small>Docker · FastAPI · SQLite</small></article></div><div class="approach-flow fade-in"><p class="section-index">FLUXO DE REFERÊNCIA DOS PROJETOS</p><ol><li><strong>Fontes</strong><span>APIs e sistemas</span></li><li><strong>Ingestão</strong><span>Python / n8n</span></li><li><strong>Transformação</strong><span>PostgreSQL / dbt</span></li><li><strong>Consumo</strong><span>Modelos e BI</span></li></ol><p class="flow-note">Testes, versionamento e logs acompanham as etapas conforme cada projeto.</p></div></div></section>
+<section id="sobremim">
       <!-- sections/sobremim.html -->
       <div class="container">
 
         <div class="sec-header fade-in">
-          <div class="sec-title">Sobre Mim</div>
+          <p class="section-index">03 / TRAJETÓRIA</p><h2 class="sec-title">Da análise à construção de pipelines</h2>
         </div>
 
         <div class="sobre-grid">
@@ -98,7 +321,7 @@
                 <span class="exp-card-data">2025 – atual</span>
               </div>
               <div class="exp-card-empresa">Dotcom Internet</div>
-              <p class="exp-card-desc">Responsável pelo BI corporativo — dashboards estratégicos usados diariamente pelo diretor, gerentes e coordenadoras regionais nas áreas comercial, financeira e operacional. Automatizei a importação de pagamentos de <strong>1 hora para 20 segundos</strong> com Python, n8n e PostgreSQL. Construí pipelines SQL com regex, window functions e CTEs encadeadas que eliminaram inconsistências nos dados e tornaram os indicadores comerciais 100% confiáveis pela primeira vez.</p>
+              <p class="exp-card-desc">Responsável pelo BI corporativo — dashboards estratégicos usados diariamente pelo diretor, gerentes e coordenadoras regionais nas áreas comercial, financeira e operacional. Automatizei a importação de pagamentos de <strong>1 hora para 20 segundos</strong> com Python, n8n e PostgreSQL. Construí pipelines SQL com regex, window functions e CTEs encadeadas que eliminaram inconsistências nos dados e melhoraram a consistência dos indicadores comerciais.</p>
             </div>
 
             <div class="exp-card fade-in d3">
@@ -150,235 +373,13 @@
       </div>
     </section>
 
-    <section id="projetos">
-      <!-- sections/projetos.html -->
-      <div class="container">
-
-        <div class="proj-header-row fade-in">
-          <div>
-            <h2 class="sec-title">Meus Projetos</h2>
-          </div>
-          <a href="https://github.com/gabrielassisp" target="_blank" rel="noopener noreferrer" class="proj-github-link">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-            </svg>
-            Ver GitHub
-          </a>
-        </div>
-
-        <div class="grid">
-<article class="card fade-in"><div class="media-container" style="background:#1e1e2e;display:flex;align-items:center;justify-content:center"><div style="width:88%;height:88%;background:#1e1e2e;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3)"><div style="background:#181825;padding:10px 14px;display:flex;gap:6px;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840"></span><span style="font-size:11px;color:#aaa;margin-left:10px;font-family:monospace">plataforma-dados · arquitetura</span></div><div style="padding:14px 16px;font-family:monospace;font-size:11px;line-height:1.8;color:#cdd6f4"><div style="white-space:pre;color:#a6adc8"># Ingestão e transformação</div><div style="white-space:pre;color:#cdd6f4">Zoho / Huggy / Meta</div><div style="white-space:pre;color:#cdd6f4">          ↓</div><div style="white-space:pre;color:#cdd6f4">Python → Bronze</div><div style="white-space:pre;color:#cdd6f4">          ↓</div><div style="white-space:pre;color:#cdd6f4">dbt → Silver → Gold</div></div></div><div class="media-overlay"><a href="projetos/plataforma-dados.html" class="pill" style="padding:12px 24px">Explorar Projeto</a></div></div><div class="content"><div class="content__top"><h3 class="title">Plataforma de dados com Python + dbt</h3><span class="pill">Python + dbt</span></div><p class="desc">Quatro fluxos para negócios e histórico Zoho, chats Huggy e anúncios Meta. Ingestão Python e transformações dbt organizadas em Bronze, Silver e Gold.</p><div class="meta"><div class="tags"><span class="tag">Python</span><span class="tag">PostgreSQL</span><span class="tag">dbt</span><span class="tag">Docker</span></div><a href="projetos/plataforma-dados.html" class="btn-link">Ver detalhes ➔</a></div></div></article>
-<article class="card fade-in"><div class="media-container" style="background:#1e1e2e;display:flex;align-items:center;justify-content:center"><div style="width:88%;height:88%;background:#1e1e2e;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3)"><div style="background:#181825;padding:10px 14px;display:flex;gap:6px;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840"></span><span style="font-size:11px;color:#aaa;margin-left:10px;font-family:monospace">monitor-etl · arquitetura</span></div><div style="padding:14px 16px;font-family:monospace;font-size:11px;line-height:1.8;color:#cdd6f4"><div style="white-space:pre;color:#a6adc8"># Rastreabilidade de cargas</div><div style="white-space:pre;color:#cdd6f4">n8n / interface → API</div><div style="white-space:pre;color:#cdd6f4">          ↓</div><div style="white-space:pre;color:#cdd6f4">Fila → execução Python</div><div style="white-space:pre;color:#cdd6f4">          ↓</div><div style="white-space:pre;color:#cdd6f4">Status + logs → SQLite</div></div></div><div class="media-overlay"><a href="projetos/monitor-etl.html" class="pill" style="padding:12px 24px">Explorar Projeto</a></div></div><div class="content"><div class="content__top"><h3 class="title">Monitor de execuções ETL</h3><span class="pill">FastAPI</span></div><p class="desc">Interface para consultar fila, histórico e logs dos jobs disparados pela API ou pelo n8n. Execução local com timeout e cancelamento.</p><div class="meta"><div class="tags"><span class="tag">FastAPI</span><span class="tag">SQLite</span><span class="tag">Python</span><span class="tag">n8n</span></div><a href="projetos/monitor-etl.html" class="btn-link">Ver detalhes ➔</a></div></div></article>
-<article class="card fade-in"><div class="media-container" style="background:#1e1e2e;display:flex;align-items:center;justify-content:center"><div style="width:88%;height:88%;background:#1e1e2e;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3)"><div style="background:#181825;padding:10px 14px;display:flex;gap:6px;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840"></span><span style="font-size:11px;color:#aaa;margin-left:10px;font-family:monospace">validacao-documental · arquitetura</span></div><div style="padding:14px 16px;font-family:monospace;font-size:11px;line-height:1.8;color:#cdd6f4"><div style="white-space:pre;color:#a6adc8"># Integração documental</div><div style="white-space:pre;color:#cdd6f4">Zoho → Google Drive</div><div style="white-space:pre;color:#cdd6f4">          ↓</div><div style="white-space:pre;color:#cdd6f4">Extração / OCR → checklist</div><div style="white-space:pre;color:#cdd6f4">          ↓</div><div style="white-space:pre;color:#cdd6f4">Notas, tags e planilhas</div></div></div><div class="media-overlay"><a href="projetos/validacao-documental.html" class="pill" style="padding:12px 24px">Explorar Projeto</a></div></div><div class="content"><div class="content__top"><h3 class="title">Validação documental com IA</h3><span class="pill">n8n</span></div><p class="desc">Integração de Zoho, Drive, planilhas e Gemini para extração e conferência documental. Workflow versionado; integração ponta a ponta a validar.</p><div class="meta"><div class="tags"><span class="tag">n8n</span><span class="tag">APIs</span><span class="tag">Gemini</span><span class="tag">Google Drive</span></div><a href="projetos/validacao-documental.html" class="btn-link">Ver detalhes ➔</a></div></div></article>
-
-          <!-- CARD 1: Faturamento -->
-          <article class="card fade-in d3">
-            <div class="media-container"
-              style="background:#0d1117;display:flex;align-items:center;justify-content:center;">
-              <div
-                style="width:88%;height:88%;background:#0d1117;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3);">
-                <div
-                  style="background:#161b22;padding:10px 14px;display:flex;gap:6px;align-items:center;border-bottom:1px solid rgba(255,255,255,.06);">
-                  <span style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></span>
-                  <span style="width:10px;height:10px;border-radius:50%;background:#febc2e"></span>
-                  <span style="width:10px;height:10px;border-radius:50%;background:#28c840"></span>
-                  <span style="font-size:11px;color:#666;margin-left:10px;font-family:monospace">pipeline.py</span>
-                </div>
-                <div style="padding:14px 16px;font-family:monospace;font-size:11px;line-height:1.8;color:#cdd6f4">
-                  <div><span style="color:#6c7086"># Bronze → Silver → Gold</span></div>
-                  <div><span style="color:#cba6f7">from</span> ingestion <span style="color:#cba6f7">import</span>
-                    run_ibge_collection</div>
-                  <div><span style="color:#cba6f7">from</span> quality <span style="color:#cba6f7">import</span>
-                    run_all_validations</div>
-                  <div>&nbsp;</div>
-                  <div><span style="color:#cba6f7">def</span> <span style="color:#89b4fa">run_pipeline</span>():</div>
-                  <div>&nbsp;&nbsp;ibge = <span style="color:#89b4fa">run_ibge_collection</span>()</div>
-                  <div>&nbsp;&nbsp;<span style="color:#89b4fa">run_all_validations</span>()</div>
-                  <div>&nbsp;&nbsp;<span style="color:#89b4fa">build_gold_layer</span>()</div>
-                </div>
-              </div>
-            </div>
-            <div class="content">
-              <div class="content__top">
-                <h3 class="title">Brazil Economic Pipeline</h3><span class="pill"
-                  style="background:rgba(192,96,240,.12);color:#c060f0;border-color:rgba(192,96,240,.25)">Python</span>
-              </div>
-              <p class="desc">Pipeline com arquitetura medallion (Bronze → Silver → Gold) integrando IBGE, Banco Central
-                e World Bank — com validação de qualidade formal e Índice de Stress Econômico.</p>
-              <div class="meta">
-                <div class="tags">
-                  <span class="tag">pandas</span>
-                  <span class="tag">SQLAlchemy</span>
-                  <span class="tag">Data quality</span>
-                  <span class="tag">IBGE API</span>
-                  <span class="tag">pytest</span>
-                </div>
-                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                  <a href="projetos/pipeline_ibge.html" class="btn-link">Ver detalhes ➔</a>
-                  <a href="https://github.com/gabrielassisp/Brazil-Pipeline-Project" target="_blank" rel="noopener noreferrer" class="btn-link" style="opacity:.7">GitHub ↗</a>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- CARD 2: ChurnIQ JS Dashboard -->
-          <article class="card fade-in d4">
-            <div class="media-container"
-              style="background:#0f1117;display:flex;align-items:center;justify-content:center;">
-              <div style="width:88%;height:88%;background:#0f1117;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3);">
-                <div style="background:#1a1d27;padding:10px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.06);">
-                  <span style="background:#fcc717;color:#111;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px">SQL</span>
-                  <span style="font-size:11px;color:#666;font-family:monospace">pipeline_comercial.sql</span>
-                </div>
-                <div style="padding:12px 16px;font-family:monospace;font-size:11px;line-height:1.8">
-                  <div><span style="color:#585878;font-style:italic">-- Tipo 1: Inativo → Ativo via regex</span></div>
-                  <div><span style="color:#7c9ef8">JOIN</span> cliente_historico ch_novo</div>
-                  <div>&nbsp;&nbsp;<span style="color:#7c9ef8">ON</span> <span style="color:#fcc717">substring</span>(ch_novo.historico</div>
-                  <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7c9ef8">FROM</span> <span style="color:#a6e3a1">'servi[çc]o de n[úu]mero \((\d+)\)'</span>)</div>
-                  <div>&nbsp;&nbsp;&nbsp;&nbsp;::int = cliente_servico.numero_plano</div>
-                  <div><span style="color:#7c9ef8">WHERE</span> id_servico_status <span style="color:#7c9ef8">IN</span> (<span style="color:#fab387">11</span>, <span style="color:#fab387">6</span>)</div>
-                  <div>&nbsp;&nbsp;<span style="color:#7c9ef8">AND</span> ch_inativo.historico <span style="color:#f38ba8">~*</span> <span style="color:#a6e3a1">'Inativo para Ativo'</span></div>
-                </div>
-              </div>
-            </div>
-            <div class="content">
-              <div class="content__top">
-                <h3 class="title">Pipeline Comercial — Vendas & Reconexões</h3>
-                <span class="pill" style="background:rgba(96,160,240,.12);color:#60a0f0;border-color:rgba(96,160,240,.25)">SQL</span>
-              </div>
-              <p class="desc">Query em produção que eliminou inconsistências que custavam <strong>dias de trabalho por semana</strong> à equipe. O dashboard comercial — usado diariamente pelo diretor, 3 gerentes e 5 coordenadoras regionais — passou a ter indicadores 100% confiáveis pela primeira vez.</p>
-              <div class="meta">
-                <div class="tags">
-                  <span class="tag">PostgreSQL</span>
-                  <span class="tag">Regex ~*</span>
-                  <span class="tag">CTEs</span>
-                  <span class="tag">LAG</span>
-                  <span class="tag">Produção</span>
-                </div>
-                <a href="projetos/sql_pipeline_reconexoes.html" class="btn-link">Ver detalhes ➔</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- CARD 3: Python - Sales Dashboard ETL -->
-          <article class="card fade-in d3">
-            <div class="media-container"
-              style="background:#1e1e2e;display:flex;align-items:center;justify-content:center;">
-              <div
-                style="width:88%;height:88%;background:#1e1e2e;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3);">
-                <div
-                  style="background:#181825;padding:10px 14px;display:flex;gap:6px;align-items:center;border-bottom:1px solid rgba(255,255,255,.06);">
-                  <span style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></span>
-                  <span style="width:10px;height:10px;border-radius:50%;background:#febc2e"></span>
-                  <span style="width:10px;height:10px;border-radius:50%;background:#28c840"></span>
-                  <span style="font-size:11px;color:#666;margin-left:10px;font-family:monospace">etl.py</span>
-                </div>
-                <div style="padding:14px 16px;font-family:monospace;font-size:11px;line-height:1.8;color:#cdd6f4">
-                  <div><span style="color:#6c7086"># Pipeline ETL + Dashboard de Vendas</span></div>
-                  <div><span style="color:#cba6f7">from</span> sqlalchemy <span style="color:#cba6f7">import</span>
-                    create_engine</div>
-                  <div><span style="color:#cba6f7">import</span> pandas <span style="color:#cba6f7">as</span> pd,
-                    schedule</div>
-                  <div>&nbsp;</div>
-                  <div><span style="color:#cba6f7">def</span> <span style="color:#89b4fa">rodar_etl</span>():</div>
-                  <div>&nbsp;&nbsp;df = <span style="color:#89b4fa">extrair_produtos</span>()</div>
-                  <div>&nbsp;&nbsp;<span style="color:#89b4fa">carregar_banco</span>(df, engine)</div>
-                  <div>&nbsp;</div>
-                  <div>schedule.<span style="color:#89b4fa">every</span>(<span
-                      style="color:#fab387">60</span>).minutes.<span style="color:#89b4fa">do</span>(rodar_etl)</div>
-                </div>
-              </div>
-            </div>
-            <div class="content">
-              <div class="content__top">
-                <h3 class="title">ETL Vendas Dashboard </h3><span class="pill"
-                  style="background:rgba(192,96,240,.12);color:#c060f0;border-color:rgba(192,96,240,.25)">Python</span>
-              </div>
-              <p class="desc">Pipeline ETL automatizado que extrai dados de API pública, persiste em SQLite via ORM e
-                expõe um dashboard interativo com Streamlit — atualizado a cada 60 minutos.</p>
-              <div class="meta">
-                <div class="tags">
-                  <span class="tag">pandas</span>
-                  <span class="tag">SQLAlchemy</span>
-                  <span class="tag">Streamlit</span>
-                  <span class="tag">ETL</span>
-                  <span class="tag">pytest</span>
-                </div>
-                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                  <a href="projetos/python_app.html" class="btn-link">Ver detalhes ➔</a>
-                  <a href="https://github.com/gabrielassisp/Projeto-App-Python" target="_blank" rel="noopener noreferrer" class="btn-link" style="opacity:.7">GitHub ↗</a>
-                  <a href="https://projeto-app-python-gs2mysp2ppn2d3rvoncgqw.streamlit.app" target="_blank" rel="noopener noreferrer" class="btn-link" style="opacity:.7">Demo ao vivo ↗</a>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- CARD 4: Python -->
-          <article class="card fade-in d1">
-            <div class="media-container">
-              <iframe title="Dashboard Comercial" width="600" height="373.5"
-                src="https://app.powerbi.com/view?r=eyJrIjoiNDBlMWIwYTMtYmI1Ni00NDZjLTgxMDUtNWM3NTk3OTllMjk0IiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9"
-                frameborder="0" allowFullScreen="true"></iframe>
-              <div class="media-overlay">
-                <a href="projetos/bi_dashboard_comercial.html" class="pill" style="padding:12px 24px">Explorar
-                  Projeto</a>
-              </div>
-            </div>
-            <div class="content">
-              <div class="content__top">
-                <h3 class="title">Dashboard Comercial</h3><span class="pill">Power BI</span>
-              </div>
-              <p class="desc">Análise end-to-end de e-commerce com R$13,6M em receita, 99.4K pedidos e 3.095 vendedores
-                —
-                cobrindo visão executiva, logística e performance de vendedores com 97 medidas DAX e KPIs HTML
-                customizados.</p>
-              <div class="meta">
-                <div class="tags"><span class="tag">DAX</span><span class="tag">ETL</span><span class="tag">HTML
-                    KPIs</span><span class="tag">Modelagem</span></div>
-                <a href="projetos/bi_dashboard_comercial.html" class="btn-link">Ver detalhes ➔</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- CARD 5: Pipeline Comercial SQL (produção) -->
-          <article class="card fade-in d1">
-            <div class="media-container">
-              <img
-                src="imagens/churniq-preview.png"
-                alt="ChurnIQ Dashboard Preview"
-                style="width:100%;height:100%;object-fit:contain;object-position:center top;display:block;background:#FAF9F6;">
-              <div class="media-overlay">
-                <a href="projetos/bi_churn.html" class="pill" style="padding:12px 24px">Explorar Projeto</a>
-              </div>
-            </div>
-            <div class="content">
-              <div class="content__top">
-                <h3 class="title">ChurnIQ Dashboard</h3><span class="pill">JavaScript</span>
-              </div>
-              <p class="desc">
- Análise de churn sobre 7.043 clientes Telco, revelando que contratos mensais cancelam 3× mais que contratos anuais. Pipeline completo no browser: parse CSV, cálculo de métricas e visualizações com Canvas API, sem frameworks.</p>
-              <div class="meta">
-                <div class="tags"><span class="tag">JS</span><span class="tag">Churn</span><span class="tag">Canvas API</span></div>
-                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                  <a href="projetos/bi_churn.html" class="btn-link">Ver detalhes ➔</a>
-                  <a href="https://github.com/gabrielassisp/Dashboard-Churn-JS" target="_blank" rel="noopener noreferrer" class="btn-link" style="opacity:.7">GitHub ↗</a>
-                </div>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
     <section id="contato">
       <!-- sections/contato.html -->
       <div class="container">
 
         <div class="sec-header fade-in">
-          <div class="sec-label">Contato</div>
-          <h2 class="sec-title">Vamos Conversar</h2>
+          <p class="section-index">04 / CONTATO</p>
+          <h2 class="sec-title">Vamos construir o próximo projeto?</h2><p class="section-copy">Para conversar sobre oportunidades, integrações ou projetos de dados.</p>
         </div>
 
         <div class="contato-grid">
@@ -425,21 +426,21 @@
             </div>
           </div>
 
-          <div class="contato-form fade-in d2">
+          <form class="contato-form fade-in d2" id="contact-form">
             <div class="form-row">
-              <div class="form-group"><label class="form-label">Nome</label><input type="text" class="form-input"
-                  placeholder="Seu nome" /></div>
-              <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input"
-                  placeholder="seu@email.com" /></div>
+              <div class="form-group"><label class="form-label" for="contact-name">Nome</label><input type="text" class="form-input"
+                  id="contact-name" required autocomplete="name" name="nome" placeholder="Seu nome" /></div>
+              <div class="form-group"><label class="form-label" for="contact-email">Email</label><input type="email" class="form-input"
+                  id="contact-email" required autocomplete="email" name="email" placeholder="seu@email.com" /></div>
             </div>
-            <div class="form-group"><label class="form-label">Assunto</label><input type="text" class="form-input"
-                placeholder="Oportunidade, parceria, projeto..." /></div>
+            <div class="form-group"><label class="form-label" for="contact-subject">Assunto</label><input type="text" class="form-input"
+                id="contact-subject" name="assunto" placeholder="Oportunidade, parceria, projeto..." /></div>
             <div class="form-group">
-              <label class="form-label">Mensagem</label>
-              <textarea class="form-textarea" placeholder="Olá Gabriel, gostaria de conversar sobre..."></textarea>
+              <label class="form-label" for="contact-message">Mensagem</label>
+              <textarea id="contact-message" name="mensagem" required class="form-textarea" placeholder="Olá Gabriel, gostaria de conversar sobre..."></textarea>
             </div>
-            <button class="form-submit" id="btn-enviar">Enviar mensagem →</button>
-          </div>
+            <button class="form-submit" id="btn-enviar" type="submit">Enviar mensagem →</button><p class="form-feedback" id="form-feedback" role="status"></p><p class="form-privacy">Sua mensagem será enviada ao meu e-mail pelo Formspree.</p>
+          </form>
 
         </div>
       </div>
@@ -449,7 +450,7 @@
 
   <footer>
     <div class="footer-brand">
-      <span style="font-size:11px;color:var(--muted)">by</span>
+      <span style="font-size:11px;color:var(--muted)">Portfólio · Engenharia de Dados</span><br>
       <strong> Gabriel Assis Pereira</strong><span class="ponto">.</span>
     </div>
     <a href="#home" class="footer-back">↑ Voltar ao topo</a>
