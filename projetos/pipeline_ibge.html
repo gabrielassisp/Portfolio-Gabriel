@@ -625,6 +625,29 @@
         <div class="proj-badge">Python &nbsp;·&nbsp; Engenharia de Dados</div>
         <h1 class="proj-title">Brazil Economic Pipeline</h1>
 <section class="project-demonstration" aria-label="Imagem real do projeto"><div class="project-demo-heading"><div><p class="section-index">CAPTURA DO PROJETO</p><h2>Relatório real gerado pelo pipeline</h2></div><a href="https://github.com/gabrielassisp/Brazil-Pipeline-Project" target="_blank" rel="noopener noreferrer" class="action-github">GitHub ↗</a></div><figure class="case-real-photo"><a href="../galeria.html?project=economia"><img src="../imagens/projetos/economia.jpg" alt="Relatório real gerado pelo pipeline" loading="lazy" width="1440" height="980"></a><figcaption>Captura do relatório HTML versionado no projeto, gerado em 20/03/2026. A execução original contém indicadores ausentes (NaN), preservados na imagem.</figcaption></figure><a class="demo-fullscreen" href="../galeria.html?project=economia">Abrir captura em tamanho maior ↗</a></section>
+<section class="real-code-section" aria-label="Trecho real de código"><p class="section-index">POR DENTRO DA IMPLEMENTAÇÃO</p><h2>Ingestão das três fontes e início da validação</h2><p>Trecho do orquestrador original que coleta IBGE, Banco Central e World Bank e inicia a etapa de qualidade.</p><details class="real-code-details"><summary>Explorar código · Python</summary><div class="code-example-meta"><span>Python · a partir da linha 42</span><a href="https://github.com/gabrielassisp/Brazil-Pipeline-Project/blob/main/brazil-econ-pipeline/pipeline.py#L42-L64" target="_blank" rel="noopener noreferrer">Ver arquivo original no GitHub ↗</a></div><pre tabindex="0"><code>    # ── Etapa 1: Ingestão ────────────────────────────────────────
+    logger.info(&quot;\n[1/4] INGESTÃO — coletando dados das APIs...&quot;)
+    os.makedirs(&quot;data&quot;, exist_ok=True)
+
+    from ingestion.ibge_collector import run_ibge_collection
+    from ingestion.bcb_collector import run_bcb_collection
+    from ingestion.worldbank_collector import run_worldbank_collection
+
+    ibge_results = run_ibge_collection()
+    bcb_results = run_bcb_collection()
+    wb_results = run_worldbank_collection()
+
+    summary[&quot;ingestion&quot;] = {
+        &quot;ibge&quot;: ibge_results,
+        &quot;bcb&quot;: bcb_results,
+        &quot;worldbank&quot;: wb_results,
+    }
+    logger.info(&quot;Ingestão concluída.&quot;)
+
+    # ── Etapa 2: Validação de qualidade ──────────────────────────
+    logger.info(&quot;\n[2/4] QUALIDADE — validando dados na camada Bronze...&quot;)
+    from quality.validator import run_all_validations
+    suites = run_all_validations()</code></pre><p class="code-source">Fonte: brazil-econ-pipeline/pipeline.py</p></details></section>
         <p class="proj-desc">Pipeline de dados econômicos brasileiros com arquitetura medallion (Bronze &#8594; Silver
           &#8594; Gold), validação de qualidade formal com expectations customizadas e camada analítica com Índice de
           Stress Econômico — alimentado por três APIs públicas reais: IBGE, Banco Central e World Bank.</p>

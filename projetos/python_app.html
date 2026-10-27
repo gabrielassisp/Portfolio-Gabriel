@@ -105,6 +105,24 @@
         <div class="proj-badge">Python &nbsp;·&nbsp; Análise de Dados</div>
         <h1 class="proj-title">Sales Dashboard ETL</h1>
 <section class="project-demonstration" aria-label="Imagem real do projeto"><div class="project-demo-heading"><div><p class="section-index">CAPTURA DO PROJETO</p><h2>Aplicação Streamlit original</h2></div><a href="https://github.com/gabrielassisp/Projeto-App-Python" target="_blank" rel="noopener noreferrer" class="action-github">GitHub ↗</a></div><figure class="case-real-photo"><a href="../galeria.html?project=vendas"><img src="../imagens/projetos/vendas.jpg" alt="Aplicação Streamlit original" loading="lazy" width="1440" height="980"></a><figcaption>Captura da aplicação Streamlit original em execução. O próprio projeto usa produtos da Fake Store API e vendas simuladas; a interface e os valores exibidos não foram recriados para o portfólio.</figcaption></figure><a class="demo-fullscreen" href="../galeria.html?project=vendas">Abrir captura em tamanho maior ↗</a></section>
+<section class="real-code-section" aria-label="Trecho real de código"><p class="section-index">POR DENTRO DA IMPLEMENTAÇÃO</p><h2>Extração da API e início da transformação</h2><p>A função de extração usa timeout e valida a resposta HTTP. Em seguida, a transformação cria o DataFrame de produtos.</p><details class="real-code-details"><summary>Explorar código · Python</summary><div class="code-example-meta"><span>Python · a partir da linha 21</span><a href="https://github.com/gabrielassisp/Projeto-App-Python/blob/main/app_python/src/etl.py#L21-L38" target="_blank" rel="noopener noreferrer">Ver arquivo original no GitHub ↗</a></div><pre tabindex="0"><code>def extrair_produtos() -&gt; list[dict]:
+    &quot;&quot;&quot;Busca todos os produtos da API.&quot;&quot;&quot;
+    logger.info(&quot;Buscando produtos da Fake Store API...&quot;)
+    response = requests.get(f&quot;{API_URL}/products&quot;, timeout=10)
+    response.raise_for_status()
+    produtos = response.json()
+    logger.info(f&quot;{len(produtos)} produtos extraídos.&quot;)
+    return produtos
+
+
+def transformar_produtos(dados_brutos: list[dict]) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Limpa e transforma os dados de produtos.&quot;&quot;&quot;
+    df = pd.DataFrame(dados_brutos)
+
+    # Renomear colunas para português
+    df = df.rename(columns={
+        &quot;id&quot;: &quot;id&quot;,
+        &quot;title&quot;: &quot;nome&quot;,</code></pre><p class="code-source">Fonte: app_python/src/etl.py</p></details></section>
         <p class="proj-desc">Pipeline ETL completo que extrai dados de uma API pública de produtos, transforma, persiste em banco de dados SQLite via SQLAlchemy ORM e exibe um dashboard interativo com Streamlit — com atualização automática a cada 60 minutos via job agendado. O projeto segue boas práticas de engenharia de software: módulos separados, testes unitários com pytest e variáveis de ambiente com dotenv.</p>
         <div class="proj-tags">
           <span class="tag">Python</span><span class="tag">pandas</span><span class="tag">SQLAlchemy ORM</span>

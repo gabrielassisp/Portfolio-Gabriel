@@ -436,6 +436,30 @@
                 <div class="proj-badge">SQL · PostgreSQL · Produção</div>
                 <h1 class="proj-title">Identificação de Reconexões via Text Mining em SQL</h1>
 <section class="project-demonstration" aria-label="Imagem real do projeto"><div class="project-demo-heading"><div><p class="section-index">CAPTURA DO PROJETO</p><h2>SQL real apresentado no estudo</h2></div><a href="https://github.com/gabrielassisp/Portfolio-Gabriel/blob/main/projetos/sql_pipeline_reconexoes.html" target="_blank" rel="noopener noreferrer" class="action-github">GitHub · estudo</a></div><figure class="case-real-photo"><a href="../galeria.html?project=sql"><img src="../imagens/projetos/sql.jpg" alt="SQL real apresentado no estudo" loading="lazy" width="1440" height="980"></a><figcaption>Captura do código SQL publicado no estudo de caso. Mostra a consulta, sem resultados com registros de clientes.</figcaption></figure><a class="demo-fullscreen" href="../galeria.html?project=sql">Abrir captura em tamanho maior ↗</a></section>
+<section class="real-code-section" aria-label="Trecho real de código"><p class="section-index">POR DENTRO DA IMPLEMENTAÇÃO</p><h2>Classificação das reconexões no SQL do estudo</h2><p>Trecho da consulta apresentada no estudo de caso original. Não contém resultados ou registros de clientes.</p><details class="real-code-details"><summary>Explorar código · SQL</summary><div class="code-example-meta"><span>SQL</span><a href="https://github.com/gabrielassisp/Portfolio-Gabriel/blob/main/projetos/sql_pipeline_reconexoes.html" target="_blank" rel="noopener noreferrer">Ver arquivo original no GitHub ↗</a></div><pre tabindex="0"><code>-- ═══════════════════════════════════════════════════════════
+-- CTEs: reconexao_tum | reconexao_tdois | reconexao_ttres
+-- Identifica 3 tipos distintos de reconexão via
+    análise
+-- de histórico textual com regex (PostgreSQL ~*)
+-- ═══════════════════════════════════════════════════════════
+
+-- TIPO 1: Reativação direta (Inativo → Ativo + novo
+    serviço no mesmo dia)
+reconexao_tum AS (
+SELECT
+cliente_servico.id_cliente_servico,
+ch_novo.data_cadastro::date AS data_habilitacao,
+uv.name AS vendedor,
+cliente.nome_razaosocial,
+servico.descricao AS servico,
+cidade.nome AS cidade
+
+FROM cliente_servico
+
+-- Evento 1: &quot;Novo serviço de número (X) adicionado&quot; —
+    ancora pelo numero_plano
+JOIN cliente_historico ch_novo
+ON ch_novo.id_cliente = cliente_servico.id_cliente</code></pre><p class="code-source">Fonte: projetos/sql_pipeline_reconexoes.html · bloco SQL</p></details></section>
                 <p class="proj-desc">Query de produção que identifica 3 tipos distintos de reconexão de clientes através
                     de análise de texto no histórico de eventos usando regex nativo do PostgreSQL — com window
                     functions, subqueries correlacionadas e CTEs encadeadas com dependência entre si.</p>

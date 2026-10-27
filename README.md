@@ -33,3 +33,7 @@ Sirva a pasta com HTTP para testar as demos: elas usam módulos JavaScript e nã
 Os cards e as páginas de estudo agora mostram capturas do monitor local, da API FastAPI, do dashboard Streamlit original, do Power BI, do ChurnIQ, do relatório econômico versionado, do SQL do estudo e do export JSON sanitizado do workflow n8n. O editor n8n exige login; a imagem do JSON não é apresentada como captura do canvas. O relatório econômico original contém NaN, preservados na imagem. O Streamlit usa dados de exemplo da própria aplicação.
 
 A galeria permite abrir os arquivos de imagem originais. As simulações didáticas em demos/ continuam disponíveis por URL, mas não são usadas como imagens dos projetos.
+
+## Código junto das capturas
+
+Os oito projetos possuem trechos extraídos dos arquivos originais, com explicação e ligação para o arquivo correspondente no GitHub. A galeria oferece abas Imagens reais e Código do projeto; as páginas de estudo têm blocos expansíveis. No Power BI, o trecho mostra a integração HTML, sem apresentar código DAX inexistente no repositório. Referências de repositórios privados continuam identificadas.
