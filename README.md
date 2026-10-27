@@ -1,6 +1,6 @@
 # Gabriel Assis — Engenharia de Dados
 
-Portfólio estático com projetos de ingestão, SQL, dbt, qualidade de dados e rastreabilidade de execuções.
+Portfólio estático com o layout original enviado pelo autor: cores, tipografia, animação de fundo, navegação e cards preservados. O conteúdo destaca ingestão, SQL, dbt, qualidade de dados e rastreabilidade de execuções.
 
 ## Projetos em destaque
 
