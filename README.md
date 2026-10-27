@@ -45,3 +45,7 @@ A página inicial e a navegação da galeria destacam seis projetos: plataforma 
 ## Evidencias e laboratorio publico
 
 A selecao prioriza Plataforma, Pipeline Comercial, Monitor, Brazil Pipeline, Validacao e ETL Vendas. Cada card inclui arquitetura e numeros com fonte em evidencias.html. O diretorio lab contem uma demonstracao independente com dados sinteticos e apenas biblioteca padrao Python/SQLite; nao replica todos os componentes de producao. Validacao documental esta identificada como em andamento.
+
+## Perfil profissional
+
+Trajetória atualizada conforme informações fornecidas pelo autor: Grupo ASF desde maio de 2026; Dotcom Internet de agosto de 2025 a maio de 2026. Formação, idiomas e situação das certificações foram revisados. BigQuery é apresentado como experiência inicial de ingestão. O projeto com Airflow existe em outro ambiente e tem um espaço reservado para sua documentação, fora dos seis destaques. O PDF do currículo original não foi substituído; a chamada principal agora leva à trajetória atualizada.
