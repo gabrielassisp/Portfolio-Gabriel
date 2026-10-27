@@ -153,3 +153,6 @@ document.getElementById('btn-enviar').addEventListener('click', async function (
     }, 3500);
   }
 });
+
+// Filtros de projetos, sem dependências externas.
+document.querySelectorAll('[data-filter]').forEach(button => { button.addEventListener('click', () => { const value=button.dataset.filter; document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button))); let count=0; document.querySelectorAll('[data-category]').forEach(card=>{card.hidden=value!=='all' && card.dataset.category!==value; if(!card.hidden) count++;}); document.getElementById('filter-status').textContent=count+' projetos exibidos'; }); });
