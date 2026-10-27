@@ -1,0 +1,18 @@
+{
+  "inspectedOn": "2026-10-27",
+  "timeZone": "America/Sao_Paulo",
+  "dbt": {
+    "models": 6,
+    "configuredTests": 39,
+    "sources": 4
+  },
+  "observedSuccessfulRun": {
+    "flow": "ETL_chats_huggy.py",
+    "startedAt": "2026-10-27T18:05:17.872566-03:00",
+    "finishedAt": "2026-10-27T18:33:58.398904-03:00",
+    "reportedRows": 37314,
+    "jobDurationSeconds": 1720.53,
+    "scope": "Uma execução concluída; não média ou SLA",
+    "source": "Histórico SQLite local e total informado pelo log da carga"
+  }
+}

@@ -41,3 +41,7 @@ Os oito projetos possuem trechos extraídos dos arquivos originais, com explica�
 ## Seleção principal
 
 A página inicial e a navegação da galeria destacam seis projetos: plataforma Python/dbt, monitor ETL, Brazil Economic Pipeline, pipeline comercial SQL, validação documental e ETL de vendas. Dashboard Comercial e ChurnIQ permanecem acessíveis pelos endereços existentes, fora da seleção principal.
+
+## Evidencias e laboratorio publico
+
+A selecao prioriza Plataforma, Pipeline Comercial, Monitor, Brazil Pipeline, Validacao e ETL Vendas. Cada card inclui arquitetura e numeros com fonte em evidencias.html. O diretorio lab contem uma demonstracao independente com dados sinteticos e apenas biblioteca padrao Python/SQLite; nao replica todos os componentes de producao. Validacao documental esta identificada como em andamento.
