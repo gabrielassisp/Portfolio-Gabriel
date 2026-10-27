@@ -80,7 +80,7 @@
     @media (max-width: 768px) { .cabeca{padding:0 20px;} .naveg ul{gap:20px;} main{padding-top:calc(var(--nav-h) + 32px);} .arch-grid{grid-template-columns:1fr;} footer{flex-direction:column;gap:10px;text-align:center;} .pipeline{flex-direction:column;} .pipeline-arrow{transform:rotate(90deg);} }
     ::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-track{background:var(--bg);} ::-webkit-scrollbar-thumb{background:var(--border-solid);border-radius:2px;}
   </style>
-</head>
+<link rel="stylesheet" href="../demos/project-visuals.css"></head>
 <body>
   <header class="cabeca">
     <a href="../index.html" class="nome_naveg"><span class="by">by</span> Gabriel Assis Pereira<span class="ponto">.</span></a>
@@ -104,6 +104,7 @@
       <div style="margin-bottom:56px">
         <div class="proj-badge">Python &nbsp;·&nbsp; Análise de Dados</div>
         <h1 class="proj-title">Sales Dashboard ETL</h1>
+<section class="project-demonstration" aria-label="Demonstração visual e código do projeto"><div class="project-demo-heading"><div><p class="section-index">EXPLORE O PROJETO</p><h2>Demonstração visual</h2></div><a href="https://github.com/gabrielassisp/Projeto-App-Python" target="_blank" rel="noopener noreferrer" class="action-github">GitHub ↗</a></div><p class="demo-context">Demonstração interativa com dados fictícios, executada apenas no navegador. </p><iframe loading="lazy" class="project-demo-frame" src="../demos/index.html?project=vendas&amp;embed=1" title="Demonstração interativa: ETL Vendas Dashboard"></iframe><a class="demo-fullscreen" href="../demos/index.html?project=vendas">Abrir demonstração em tela cheia ↗</a></section>
         <p class="proj-desc">Pipeline ETL completo que extrai dados de uma API pública de produtos, transforma, persiste em banco de dados SQLite via SQLAlchemy ORM e exibe um dashboard interativo com Streamlit — com atualização automática a cada 60 minutos via job agendado. O projeto segue boas práticas de engenharia de software: módulos separados, testes unitários com pytest e variáveis de ambiente com dotenv.</p>
         <div class="proj-tags">
           <span class="tag">Python</span><span class="tag">pandas</span><span class="tag">SQLAlchemy ORM</span>

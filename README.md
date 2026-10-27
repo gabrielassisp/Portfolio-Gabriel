@@ -22,3 +22,9 @@ Site preparado para GitHub Pages a partir da raiz da branch `main`. Os caminhos 
 O currículo PDF é o documento original. Os estudos de caso internos usam descrições de arquitetura, sem credenciais ou dados de execução reais. O formulário mantém a integração Formspree existente; os testes de navegação não enviam mensagens.
 
 A navegação apresenta projetos antes da trajetória, uma seção de competências por etapa do pipeline, filtros locais e menu para celular. O formulário mantém o endpoint Formspree original, com validação nativa e estados de envio. Os testes do formulário interceptam as requisições, sem enviar mensagens reais.
+
+## Demonstrações visuais
+
+A pasta demos contém apresentações interativas dos oito projetos. As simulações usam dados fictícios locais e não executam APIs, SQL, IA ou cargas reais. Power BI e ChurnIQ oferecem acesso aos dashboards originais. Os cards e os estudos têm links para os repositórios ou para o código do estudo; repositórios privados são identificados. No estudo Power BI, o repositório contém a página e documentação, não um arquivo PBIX.
+
+Sirva a pasta com HTTP para testar as demos: elas usam módulos JavaScript e não devem ser abertas por file://.
