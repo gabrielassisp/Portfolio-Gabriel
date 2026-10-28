@@ -49,3 +49,7 @@ A selecao prioriza Plataforma, Pipeline Comercial, Monitor, Brazil Pipeline, Val
 ## Perfil profissional
 
 Trajetória atualizada conforme informações fornecidas pelo autor: Grupo ASF desde maio de 2026; Dotcom Internet de agosto de 2025 a maio de 2026. Formação, idiomas e situação das certificações foram revisados. BigQuery é apresentado como experiência inicial de ingestão. O projeto com Airflow existe em outro ambiente e tem um espaço reservado para sua documentação, fora dos seis destaques. O PDF do currículo original não foi substituído; a chamada principal agora leva à trajetória atualizada.
+
+## Apresentação progressiva dos projetos
+
+A página principal apresenta somente imagem, título, proposta curta e a ação de explorar cada projeto. As métricas e suas fontes continuam acessíveis pela página de evidências; os estudos individuais mantêm capturas, código, GitHub e links do laboratório. A validação documental mantém o aviso de andamento na seleção principal.
