@@ -4,7 +4,7 @@ Portfólio em GitHub Pages com tema original preservado e foco em engenharia de 
 
 ## Seleção de seis projetos
 
-Destaques: Plataforma PostgreSQL/dbt, Brazil Economic Pipeline e Airflow. Complementares: Monitor ETL, Pipeline SQL e ETL de vendas. Validação documental permanece acessível pelo endereço antigo, fora da seleção principal.
+Uma única grade apresenta Plataforma PostgreSQL/dbt, Brazil Economic Pipeline, Airflow, Monitor ETL, Pipeline SQL e ETL de vendas. Cada card reúne imagem, título, resumo e link para os detalhes. Validação documental permanece acessível pelo endereço antigo, fora da seleção principal.
 
 - [Plataforma pública](platform-demo/): Docker Compose, PostgreSQL, nove modelos dbt e testes incrementais/recuperação.
 - [Brazil Pipeline](https://github.com/gabrielassisp/Brazil-Pipeline-Project): cron diário configurado para 04h17 de São Paulo (07h17 UTC). O disparo schedule ainda aguarda comprovação; push bem-sucedido não o comprova.
