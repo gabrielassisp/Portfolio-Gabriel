@@ -1,4 +1,4 @@
-import {projects,accessLabel} from './projects.js';
+import {projects,accessLabel} from './projects.js?v=20261102-publicdemo';
 const params=new URLSearchParams(location.search);
 if(params.get('embed')==='1')document.body.classList.add('embedded-mode');
 const project=projects.find(p=>p.id===params.get('project'));

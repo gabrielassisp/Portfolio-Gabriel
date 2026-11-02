@@ -1,4 +1,4 @@
-import {projects,accessLabel} from './demos/projects.js';
+import {projects,accessLabel} from './demos/projects.js?v=20261102-publicdemo';
 import {captures} from './imagens/projetos/captures.js';
 const id=new URLSearchParams(location.search).get('project');
 const project=projects.find(p=>p.id===id)||projects[0];
@@ -13,9 +13,10 @@ document.getElementById('gallery-caption').textContent=capture.caption;
 const actions=document.getElementById('gallery-actions');
 for(const [href,label,external] of [['projetos/'+project.page,'Estudo completo',false],['https://github.com/gabrielassisp/'+project.repo,accessLabel(project),true]]){const a=document.createElement('a');a.href=href;a.textContent=label;if(external){a.target='_blank';a.rel='noopener noreferrer';}actions.append(a);}
 const nav=document.getElementById('gallery-projects');
-projects.filter(p=>!['comercial','churn'].includes(p.id)).sort((a,b)=>['plataforma','sql','monitor','economia','documentos','vendas'].indexOf(a.id)-['plataforma','sql','monitor','economia','documentos','vendas'].indexOf(b.id)).forEach(p=>{const a=document.createElement('a');a.href='?project='+p.id;a.textContent=p.title;if(p.id===project.id)a.setAttribute('aria-current','page');nav.append(a);});
+projects.filter(p=>!['comercial','churn'].includes(p.id)).sort((a,b)=>['plataforma','economia','monitor','sql','vendas','documentos'].indexOf(a.id)-['plataforma','economia','monitor','sql','vendas','documentos'].indexOf(b.id)).forEach(p=>{const a=document.createElement('a');a.href='?project='+p.id;a.textContent=p.title;if(p.id===project.id)a.setAttribute('aria-current','page');nav.append(a);});
 import {codeExamples} from './imagens/projetos/code-examples.js';
-const example=codeExamples[project.id];
+import {publicPlatformExample} from './imagens/projetos/platform-demo-code.js';
+const example=project.id==='plataforma'?publicPlatformExample:codeExamples[project.id];
 document.getElementById('code-title').textContent=example.title;
 document.getElementById('code-explanation').textContent=example.explanation;
 document.getElementById('code-language').textContent=example.language+(example.startLine?' · a partir da linha '+example.startLine:'');
