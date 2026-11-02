@@ -56,4 +56,6 @@ A página principal apresenta somente imagem, título, proposta curta e a ação
 
 ## Orquestração com Apache Airflow
 
-O espaço reservado foi substituído pelo estudo do DAG enterprise_data_platform_bronze: seis tarefas, quatro scripts Python e cinco tabelas Bronze no PostgreSQL. A documentação descreve ingestão de Huggy, Zoho Bigin e Meta Ads, validações e disparo manual. Fonte: inspeção dos arquivos no WSL em 02/11/2026; não constitui evidência de execução ponta a ponta. O código privado, credenciais e dados operacionais não integram esta apresentação.
+Estudo atualizado em projetos/airflow.html após conferir as DAGs realmente montadas pelo Docker Compose. São quatro DAGs de ingestão individual e edp_end_to_end, com seis tarefas até snapshot e build dbt. A cópia enterprise_data_platform_bronze do WSL não é o conjunto montado nos containers.
+
+Correções locais em 02/11/2026: dbt em ambiente virtual separado na imagem, montagem do projeto dbt nos serviços e banco/usuário exigidos nas Airflow Variables. Sintaxe das cinco DAGs e quatro scripts, montagem no Compose e funções de execução com subprocessos simulados foram verificados. Não houve reconstrução dos containers, importação pelo Airflow ou carga real: comandos WSL bloqueados com Wsl/E_ACCESSDENIED. As falhas antigas do executor continuam sem causa confirmada e sem revalidação operacional. Código privado, credenciais e dados operacionais não são publicados neste estudo.
