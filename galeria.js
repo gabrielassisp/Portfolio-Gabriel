@@ -1,15 +1,15 @@
 import {projects,accessLabel} from './demos/projects.js?v=20261102-review-six';
-import {captures} from './imagens/projetos/captures.js?v=20261102-review-six';
+import {captures} from './imagens/projetos/captures.js?v=20261102-links';
 const id=new URLSearchParams(location.search).get('project');
 const project=projects.find(p=>p.id===id)||projects[0];
 const capture=captures[project.id];
 document.title=project.title+' · Capturas | Gabriel Assis';
 document.getElementById('gallery-title').textContent=project.title;
 document.getElementById('gallery-description').textContent=capture.label;
-if(project.id==='airflow')document.getElementById('image-tab').textContent='Diagrama';
+if(project.id==='airflow')document.getElementById('image-tab').textContent='Interface de referência';
 if(project.id==='plataforma')document.getElementById('image-tab').textContent='Trecho de código';
 const image=document.getElementById('gallery-image');
-image.src='imagens/projetos/'+capture.file;image.alt=capture.label;
+image.src=capture.file.startsWith('https://')?capture.file:'imagens/projetos/'+capture.file;image.alt=capture.label;
 document.getElementById('gallery-full').href=image.src;
 document.getElementById('gallery-caption').textContent=capture.caption;
 const actions=document.getElementById('gallery-actions');

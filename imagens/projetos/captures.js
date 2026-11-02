@@ -1,5 +1,5 @@
 export const captures = {
- airflow:{file:'airflow.svg',label:'Arquitetura do projeto Airflow',caption:'Diagrama das dependências profissionais; não comprova uma execução. O código público é um exemplo sintético independente.'},
+ airflow:{file:'https://airflow.apache.org/docs/apache-airflow/2.9.2/_images/dags.png',label:'Interface Airflow — referência oficial',caption:'Captura publicada na documentação Apache Airflow 2.9.2, Apache Software Foundation. Ilustra a ferramenta; não mostra as DAGs nem uma execução do projeto profissional. Fonte: https://airflow.apache.org/docs/apache-airflow/2.9.2/ui.html#dags-view'},
  plataforma:{file:'platform-incremental.svg',label:'Trecho real do modelo incremental dbt',caption:'Representação tipográfica de código do arquivo público fct_deals.sql; não é uma captura do ambiente profissional.'},
  monitor:{file:'monitor.jpg',label:'Interface real do ETL Monitor',caption:'Captura da visão geral do monitor em execução. Os números correspondem ao instante da captura, não a indicadores atualizados em tempo real.'},
  economia:{file:'economia.jpg',label:'Relatório real gerado pelo pipeline',caption:'Captura do relatório HTML versionado no projeto, gerado em 20/03/2026. A execução original contém indicadores ausentes (NaN), preservados na imagem.'},
