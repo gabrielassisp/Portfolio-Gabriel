@@ -6,6 +6,8 @@ const capture=captures[project.id];
 document.title=project.title+' · Capturas | Gabriel Assis';
 document.getElementById('gallery-title').textContent=project.title;
 document.getElementById('gallery-description').textContent=capture.label;
+if(project.id==='airflow')document.getElementById('image-tab').textContent='Diagrama';
+if(project.id==='plataforma')document.getElementById('image-tab').textContent='Trecho de código';
 const image=document.getElementById('gallery-image');
 image.src='imagens/projetos/'+capture.file;image.alt=capture.label;
 document.getElementById('gallery-full').href=image.src;
