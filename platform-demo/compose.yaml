@@ -1,0 +1,38 @@
+name: portfolio-platform-lab
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: portfolio_demo
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo_local_only
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U demo -d portfolio_demo]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - demo_data:/var/lib/postgresql/data
+    networks: [lab]
+    mem_limit: 256m
+  pipeline:
+    build: .
+    environment:
+      PGHOST: postgres
+      PGPORT: '5432'
+      PGDATABASE: portfolio_demo
+      PGUSER: demo
+      PGPASSWORD: demo_local_only
+      DBT_SEND_ANONYMOUS_USAGE_STATS: 'false'
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./artifacts:/app/artifacts
+    networks: [lab]
+    mem_limit: 512m
+volumes:
+  demo_data:
+networks:
+  lab:
+    internal: true

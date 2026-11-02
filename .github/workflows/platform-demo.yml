@@ -1,0 +1,34 @@
+name: Public Postgres dbt demo
+on:
+  push:
+    branches: [main]
+    paths: ['platform-demo/**', '.github/workflows/platform-demo.yml']
+  pull_request:
+    paths: ['platform-demo/**', '.github/workflows/platform-demo.yml']
+permissions:
+  contents: read
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: platform-demo
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose run --build --rm pipeline
+      - run: docker compose run --rm pipeline python verify_recovery.py
+      - name: Preserve results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-platform-demo-evidence
+          retention-days: 7
+          if-no-files-found: ignore
+          path: |
+            platform-demo/artifacts/**/run.json
+            platform-demo/artifacts/**/dbt-target/run_results.json
+            platform-demo/artifacts/**/dbt-target/manifest.json
+      - name: Stop isolated demo
+        if: always()
+        run: docker compose down -v

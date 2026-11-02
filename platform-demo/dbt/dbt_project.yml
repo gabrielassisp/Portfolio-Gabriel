@@ -1,0 +1,30 @@
+name: platform_demo
+version: '1.0.0'
+config-version: 2
+profile: platform_demo
+model-paths: [models]
+test-paths: [tests]
+macro-paths: [macros]
+flags:
+  send_anonymous_usage_stats: false
+models:
+  platform_demo:
+    +materialized: table
+    stg_records:
+      +schema: staging
+    silver_deals:
+      +schema: silver
+    silver_history:
+      +schema: silver
+    silver_chats:
+      +schema: silver
+    silver_ads:
+      +schema: silver
+    rejected_records:
+      +schema: quality
+    dim_owners:
+      +schema: gold
+    fct_deals:
+      +schema: gold
+    daily_metrics:
+      +schema: gold

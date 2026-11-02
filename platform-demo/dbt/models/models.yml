@@ -1,0 +1,51 @@
+version: 2
+models:
+  - name: silver_deals
+    columns:
+      - name: deal_id
+        data_tests: [unique, not_null]
+  - name: silver_history
+    columns:
+      - name: history_id
+        data_tests: [unique, not_null]
+      - name: deal_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('silver_deals')
+                field: deal_id
+  - name: silver_chats
+    columns:
+      - name: chat_id
+        data_tests: [unique, not_null]
+      - name: deal_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('silver_deals')
+                field: deal_id
+  - name: silver_ads
+    columns:
+      - name: ad_id
+        data_tests: [unique, not_null]
+  - name: dim_owners
+    columns:
+      - name: owner_id
+        data_tests: [unique, not_null]
+  - name: fct_deals
+    columns:
+      - name: deal_id
+        data_tests: [unique, not_null]
+      - name: owner_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_owners')
+                field: owner_id
+  - name: daily_metrics
+    columns:
+      - name: business_date
+        data_tests: [unique, not_null]

@@ -1,0 +1,23 @@
+{
+  "run_id": "c739063a-1357-452e-8d56-bb60b04cf8bb",
+  "input_rows": 1844,
+  "synthetic": true,
+  "status": "success",
+  "dbt_models": 9,
+  "dbt_tests_passed": 22,
+  "rows": {
+    "bronze.raw_records": 1844,
+    "silver.silver_deals": 400,
+    "silver.silver_history": 800,
+    "silver.silver_chats": 600,
+    "silver.silver_ads": 30,
+    "quality.rejected_records": 4
+  },
+  "fact_rows": 400,
+  "elapsed_seconds": 26.751,
+  "recovery_checks": {
+    "repeat_same_content": true,
+    "injected_failure_rolled_back": true,
+    "failed_status_persisted": true
+  }
+}
