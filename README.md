@@ -48,8 +48,12 @@ A selecao prioriza Plataforma, Pipeline Comercial, Monitor, Brazil Pipeline, Val
 
 ## Perfil profissional
 
-Trajetória atualizada conforme informações fornecidas pelo autor: Grupo ASF desde maio de 2026; Dotcom Internet de agosto de 2025 a maio de 2026. Formação, idiomas e situação das certificações foram revisados. BigQuery é apresentado como experiência inicial de ingestão. O projeto com Airflow existe em outro ambiente e tem um espaço reservado para sua documentação, fora dos seis destaques. O PDF do currículo original não foi substituído; a chamada principal agora leva à trajetória atualizada.
+Trajetória atualizada conforme informações fornecidas pelo autor: Grupo ASF desde maio de 2026; Dotcom Internet de agosto de 2025 a maio de 2026. Formação, idiomas e situação das certificações foram revisados. BigQuery é apresentado como experiência inicial de ingestão. O projeto com Airflow está documentado em projetos/airflow.html, com dependências verificadas no código local e diagrama de arquitetura. O PDF do currículo original não foi substituído; a chamada principal agora leva à trajetória atualizada.
 
 ## Apresentação progressiva dos projetos
 
 A página principal apresenta somente imagem, título, proposta curta e a ação de explorar cada projeto. As métricas e suas fontes continuam acessíveis pela página de evidências; os estudos individuais mantêm capturas, código, GitHub e links do laboratório. A validação documental mantém o aviso de andamento na seleção principal.
+
+## Orquestração com Apache Airflow
+
+O espaço reservado foi substituído pelo estudo do DAG enterprise_data_platform_bronze: seis tarefas, quatro scripts Python e cinco tabelas Bronze no PostgreSQL. A documentação descreve ingestão de Huggy, Zoho Bigin e Meta Ads, validações e disparo manual. Fonte: inspeção dos arquivos no WSL em 02/11/2026; não constitui evidência de execução ponta a ponta. O código privado, credenciais e dados operacionais não integram esta apresentação.
