@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "baseline_rows": 400,
+  "after_delta_rows": 401,
+  "updated_amount_cents": 77700,
+  "updated_version": 3,
+  "replay_without_duplicates": true,
+  "older_version_ignored": true,
+  "missing_key_preserved": true,
+  "strategy": "dbt incremental delete+insert; unique_key=deal_id"
+}

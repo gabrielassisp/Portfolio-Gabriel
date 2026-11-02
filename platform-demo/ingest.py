@@ -38,7 +38,7 @@ def fixtures():
     return rows
 
 
-def ingest(fail_after=None):
+def ingest(fail_after=None, rows=None):
     ident = str(uuid.uuid4())
     with psycopg2.connect('') as conn:
         with conn.cursor() as cur:
@@ -51,7 +51,7 @@ def ingest(fail_after=None):
                 payload jsonb NOT NULL, run_id uuid NOT NULL, loaded_at timestamptz DEFAULT now())''')
             cur.execute("INSERT INTO ops.runs(run_id,status) VALUES (%s,'running')",(ident,))
         conn.commit()
-        rows = fixtures()
+        rows = fixtures() if rows is None else rows
         try:
             with conn.cursor() as cur:
                 cur.execute('TRUNCATE bronze.raw_records RESTART IDENTITY')

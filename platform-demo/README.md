@@ -1,5 +1,7 @@
 # Plataforma pública mínima — Python + Postgres + dbt
 
+[![CI Docker e dbt](https://github.com/gabrielassisp/Portfolio-Gabriel/actions/workflows/platform-demo.yml/badge.svg?branch=main)](https://github.com/gabrielassisp/Portfolio-Gabriel/actions/workflows/platform-demo.yml)
+
 Laboratório independente com dados **100% fictícios**. Aproxima a demonstração da stack usada na plataforma privada sem copiar dados, regras de negócio, credenciais ou código interno. Não é uma reprodução completa do ambiente de produção.
 
 ```mermaid
@@ -51,7 +53,7 @@ Cada carga gera `artifacts/<run_id>/run.json`, manifest, resultados dos testes, 
 
 O snapshot Bronze é substituído em uma transação. A ingestão registra o início da execução em uma transação separada; uma falha faz rollback dos dados e persiste status `failed`. O script de recuperação repete a carga, compara conteúdo/contagem e injeta falha após 100 registros para comprovar a preservação do último snapshot.
 
-`ops.runs` registra **ingestões**. O resultado de dbt e o status completo do pipeline estão nos artefatos; falha no dbt não muda retroativamente o status da ingestão. Não há transação global entre Bronze e todos os modelos dbt. O laboratório não implementa atualização incremental, CDC, SCD2, APIs externas, n8n ou Airflow.
+`ops.runs` registra **ingestões**. O resultado de dbt e o status completo do pipeline estão nos artefatos; falha no dbt não muda retroativamente o status da ingestão. Não há transação global entre Bronze e todos os modelos dbt. Gold implementa carga incremental na fato; Bronze continua sendo snapshot. Não há CDC, SCD2, propagação de exclusões, APIs externas, n8n ou Airflow.
 
 ## Encerrar
 
@@ -63,8 +65,21 @@ O volume mantém o histórico. Para apagar **somente os dados deste laboratório
 
 ## Verificação automática
 
-O workflow `Public Postgres dbt demo` executa a carga e a prova de recuperação em alterações deste diretório. Os resultados ficam como artefatos por sete dias. A documentação de execução validada está em `evidence.json` quando disponível.
+O workflow `Public Postgres dbt demo` executa a carga, a prova de recuperação e o teste incremental em alterações deste diretório. Os resultados ficam como artefatos por sete dias. A documentação de execução validada está em `evidence.json` quando disponível.
 
 ## Execução validada
 
-Em ambiente Docker/WSL local: **1.844 registros fictícios, nove modelos e 22 testes dbt aprovados**, em 26,751 segundos para ingestão, build, documentação e consulta. É uma execução específica, sem tempo de download/build da imagem. Consulte `evidence.json`.
+Em ambiente Docker/WSL local: **1.844 registros fictícios, nove modelos e 23 testes dbt aprovados**, em 23,972 segundos para ingestão, build, documentação e consulta. É uma execução específica, sem tempo de download/build da imagem. Consulte `evidence.json`.
+
+## Gold incremental
+
+`fct_deals` usa dbt incremental `delete+insert`, `unique_key=deal_id` e `source_version` crescente por negócio. Insere chaves novas e atualiza somente versões superiores. Replays não duplicam linhas; versões antigas e chaves ausentes no snapshot não removem o estado mais recente. A Silver e as métricas diárias são reconstruídas. Isso depende do contrato de versão das fixtures, não é um watermark genérico para APIs.
+
+O teste parte de 400 negócios, atualiza uma chave e acrescenta outra, verifica 401 linhas, repete sem duplicação e reapresenta versões antigas. A CI começa com volume novo. Para atualizar um volume antigo ou reiniciar o cenário de teste, faça full-refresh antes:
+
+```bash
+docker compose run --rm pipeline python run_pipeline.py --full-refresh
+docker compose run --rm pipeline python verify_incremental.py
+```
+
+O full-refresh reconstrói a fato a partir do snapshot e descarta o estado incremental anterior. A prova do cenário está em `incremental-evidence.json`.

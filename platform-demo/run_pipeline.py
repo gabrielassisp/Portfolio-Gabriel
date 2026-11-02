@@ -1,4 +1,6 @@
+import argparse
 import json
+import shutil
 from pathlib import Path
 import subprocess
 import time
@@ -7,6 +9,7 @@ from ingest import ingest
 
 
 def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--full-refresh',action='store_true');args=parser.parse_args()
     clock=time.perf_counter()
     report=ingest()
     output=Path('artifacts')/report['run_id'];output.mkdir(parents=True,exist_ok=False)
@@ -14,8 +17,9 @@ def main():
            '--log-path',str(output.resolve()/'dbt-logs')]
     report['status']='running'
     try:
-        subprocess.run(['dbt','--no-use-colors','build']+flags,check=True,timeout=180)
-        build=json.loads((output/'dbt-target/run_results.json').read_text())
+        subprocess.run(['dbt','--no-use-colors','build']+flags+(['--full-refresh'] if args.full_refresh else []),check=True,timeout=180)
+        shutil.copyfile(output/'dbt-target/run_results.json', output/'dbt-target/build_results.json')
+        build=json.loads((output/'dbt-target/build_results.json').read_text())
         report['dbt_models']=sum(r['unique_id'].startswith('model.') and r['status']=='success' for r in build['results'])
         report['dbt_tests_passed']=sum(r['unique_id'].startswith('test.') and r['status']=='pass' for r in build['results'])
         subprocess.run(['dbt','--no-use-colors','docs','generate']+flags,check=True,timeout=120)

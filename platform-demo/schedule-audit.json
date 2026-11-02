@@ -1,0 +1,8 @@
+{
+  "audited_at": "2026-11-02T11:38:00-03:00",
+  "repository": "gabrielassisp/Brazil-Pipeline-Project",
+  "schedule_event_runs_found": 0,
+  "cron": "0 11 * * *",
+  "successful_push_run": "https://github.com/gabrielassisp/Brazil-Pipeline-Project/actions/runs/41384401185",
+  "daily_execution_verified": false
+}

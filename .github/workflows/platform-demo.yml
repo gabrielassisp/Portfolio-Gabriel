@@ -18,6 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: docker compose run --build --rm pipeline
       - run: docker compose run --rm pipeline python verify_recovery.py
+      - run: docker compose run --rm pipeline python verify_incremental.py
       - name: Preserve results
         if: always()
         uses: actions/upload-artifact@v4
@@ -26,7 +27,9 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
           path: |
+            platform-demo/artifacts/incremental-check.json
             platform-demo/artifacts/**/run.json
+            platform-demo/artifacts/**/dbt-target/build_results.json
             platform-demo/artifacts/**/dbt-target/run_results.json
             platform-demo/artifacts/**/dbt-target/manifest.json
       - name: Stop isolated demo

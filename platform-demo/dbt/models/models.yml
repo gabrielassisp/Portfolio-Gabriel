@@ -36,6 +36,8 @@ models:
         data_tests: [unique, not_null]
   - name: fct_deals
     columns:
+      - name: source_version
+        data_tests: [not_null]
       - name: deal_id
         data_tests: [unique, not_null]
       - name: owner_id

@@ -1,10 +1,10 @@
 {
-  "run_id": "c739063a-1357-452e-8d56-bb60b04cf8bb",
+  "run_id": "13c60f87-be0e-43ab-b632-807615f1a3d2",
   "input_rows": 1844,
   "synthetic": true,
   "status": "success",
   "dbt_models": 9,
-  "dbt_tests_passed": 22,
+  "dbt_tests_passed": 23,
   "rows": {
     "bronze.raw_records": 1844,
     "silver.silver_deals": 400,
@@ -14,7 +14,8 @@
     "quality.rejected_records": 4
   },
   "fact_rows": 400,
-  "elapsed_seconds": 26.751,
+  "elapsed_seconds": 23.972,
+  "observed_date": "2026-11-02",
   "recovery_checks": {
     "repeat_same_content": true,
     "injected_failure_rolled_back": true,
