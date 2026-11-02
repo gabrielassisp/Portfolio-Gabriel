@@ -1,0 +1,23 @@
+name: Synthetic Airflow demo
+on:
+  push:
+    branches: [main]
+    paths: ['airflow-demo/**', '.github/workflows/airflow-demo.yml']
+  pull_request:
+    paths: ['airflow-demo/**', '.github/workflows/airflow-demo.yml']
+permissions:
+  contents: read
+jobs:
+  dag-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Import and run synthetic DAG
+        run: |
+          docker run --rm --entrypoint bash \
+            -e AIRFLOW__CORE__LOAD_EXAMPLES=False \
+            -e AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/portfolio-demo/dags \
+            -v "$PWD/airflow-demo:/opt/airflow/portfolio-demo:ro" \
+            apache/airflow:2.9.2-python3.11 \
+            -c 'airflow db migrate && python /opt/airflow/portfolio-demo/verify_demo.py'

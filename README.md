@@ -1,61 +1,17 @@
-# Gabriel Assis — Engenharia de Dados
+# Gabriel Assis — Analista de Dados & IA
 
-Portfólio estático com o layout original enviado pelo autor: cores, tipografia, animação de fundo, navegação e cards preservados. O conteúdo destaca ingestão, SQL, dbt, qualidade de dados e rastreabilidade de execuções.
+Portfólio em GitHub Pages com tema original preservado e foco em engenharia de dados.
 
-## Projetos em destaque
+## Seleção de seis projetos
 
-- Plataforma de dados com Python, PostgreSQL e dbt.
-- Monitor de execuções ETL com FastAPI e SQLite.
-- Brazil Economic Pipeline.
-- Pipeline comercial em SQL.
-- Integração documental com n8n e Gemini.
-- Dashboards como camada de consumo analítico.
+Destaques: Plataforma PostgreSQL/dbt, Brazil Economic Pipeline e Airflow. Complementares: Monitor ETL, Pipeline SQL e ETL de vendas. Validação documental permanece acessível pelo endereço antigo, fora da seleção principal.
 
-## Desenvolvimento local
+- [Plataforma pública](platform-demo/): Docker Compose, PostgreSQL, nove modelos dbt e testes incrementais/recuperação.
+- [Brazil Pipeline](https://github.com/gabrielassisp/Brazil-Pipeline-Project): cron diário configurado para 04h17 de São Paulo (07h17 UTC). O disparo schedule ainda aguarda comprovação; push bem-sucedido não o comprova.
+- [Airflow público](airflow-demo/): exemplo sintético de seis tarefas; DagBag e dag.test() são verificados em CI. Não é o código privado nem comprovação operacional das cinco DAGs profissionais até snapshot/build dbt.
 
-Abra `index.html` ou sirva a raiz com um servidor HTTP. Não há build nem dependências para instalar.
+A galeria, a home e a visão geral mantêm a mesma seleção. Métricas, datas e limites ficam em evidencias.html. O case profissional está em projetos/impacto-negocio.html.
 
-## Publicação
+## Desenvolvimento e publicação
 
-Site preparado para GitHub Pages a partir da raiz da branch `main`. Os caminhos de assets e páginas são relativos, compatíveis com `/Portfolio-Gabriel/`.
-
-O currículo PDF é o documento original. Os estudos de caso internos usam descrições de arquitetura, sem credenciais ou dados de execução reais. O formulário mantém a integração Formspree existente; os testes de navegação não enviam mensagens.
-
-A navegação apresenta projetos antes da trajetória, uma seção de competências por etapa do pipeline, filtros locais e menu para celular. O formulário mantém o endpoint Formspree original, com validação nativa e estados de envio. Os testes do formulário interceptam as requisições, sem enviar mensagens reais.
-
-## Demonstrações visuais
-
-A pasta demos contém apresentações interativas dos oito projetos. As simulações usam dados fictícios locais e não executam APIs, SQL, IA ou cargas reais. Power BI e ChurnIQ oferecem acesso aos dashboards originais. Os cards e os estudos têm links para os repositórios ou para o código do estudo; repositórios privados são identificados. No estudo Power BI, o repositório contém a página e documentação, não um arquivo PBIX.
-
-Sirva a pasta com HTTP para testar as demos: elas usam módulos JavaScript e não devem ser abertas por file://.
-## Capturas reais
-
-Os cards e as páginas de estudo agora mostram capturas do monitor local, da API FastAPI, do dashboard Streamlit original, do Power BI, do ChurnIQ, do relatório econômico versionado, do SQL do estudo e do export JSON sanitizado do workflow n8n. O editor n8n exige login; a imagem do JSON não é apresentada como captura do canvas. O relatório econômico original contém NaN, preservados na imagem. O Streamlit usa dados de exemplo da própria aplicação.
-
-A galeria permite abrir os arquivos de imagem originais. As simulações didáticas em demos/ continuam disponíveis por URL, mas não são usadas como imagens dos projetos.
-
-## Código junto das capturas
-
-Os oito projetos possuem trechos extraídos dos arquivos originais, com explicação e ligação para o arquivo correspondente no GitHub. A galeria oferece abas Imagens reais e Código do projeto; as páginas de estudo têm blocos expansíveis. No Power BI, o trecho mostra a integração HTML, sem apresentar código DAX inexistente no repositório. Referências de repositórios privados continuam identificadas.
-
-## Seleção principal
-
-A página inicial e a navegação da galeria destacam seis projetos: plataforma Python/dbt, monitor ETL, Brazil Economic Pipeline, pipeline comercial SQL, validação documental e ETL de vendas. Dashboard Comercial e ChurnIQ permanecem acessíveis pelos endereços existentes, fora da seleção principal.
-
-## Evidencias e laboratorio publico
-
-A selecao prioriza Plataforma, Pipeline Comercial, Monitor, Brazil Pipeline, Validacao e ETL Vendas. Cada card inclui arquitetura e numeros com fonte em evidencias.html. O diretorio lab contem uma demonstracao independente com dados sinteticos e apenas biblioteca padrao Python/SQLite; nao replica todos os componentes de producao. Validacao documental esta identificada como em andamento.
-
-## Perfil profissional
-
-Trajetória atualizada conforme informações fornecidas pelo autor: Grupo ASF desde maio de 2026; Dotcom Internet de agosto de 2025 a maio de 2026. Formação, idiomas e situação das certificações foram revisados. BigQuery é apresentado como experiência inicial de ingestão. O projeto com Airflow está documentado em projetos/airflow.html, com dependências verificadas no código local e diagrama de arquitetura. O PDF do currículo original não foi substituído; a chamada principal agora leva à trajetória atualizada.
-
-## Apresentação progressiva dos projetos
-
-A página principal apresenta somente imagem, título, proposta curta e a ação de explorar cada projeto. As métricas e suas fontes continuam acessíveis pela página de evidências; os estudos individuais mantêm capturas, código, GitHub e links do laboratório. A validação documental mantém o aviso de andamento na seleção principal.
-
-## Orquestração com Apache Airflow
-
-Estudo atualizado em projetos/airflow.html após conferir as DAGs realmente montadas pelo Docker Compose. São quatro DAGs de ingestão individual e edp_end_to_end, com seis tarefas até snapshot e build dbt. A cópia enterprise_data_platform_bronze do WSL não é o conjunto montado nos containers.
-
-Correções locais em 02/11/2026: dbt em ambiente virtual separado na imagem, montagem do projeto dbt nos serviços e banco/usuário exigidos nas Airflow Variables. Sintaxe das cinco DAGs e quatro scripts, montagem no Compose e funções de execução com subprocessos simulados foram verificados. Não houve reconstrução dos containers, importação pelo Airflow ou carga real: comandos WSL bloqueados com Wsl/E_ACCESSDENIED. As falhas antigas do executor continuam sem causa confirmada e sem revalidação operacional. Código privado, credenciais e dados operacionais não são publicados neste estudo.
+Sirva a raiz por HTTP; não há build do site. Publicação pela raiz da main no GitHub Pages. Os workflows de laboratório validam somente seus exemplos públicos. Não inclua credenciais, dados internos ou artefatos locais.

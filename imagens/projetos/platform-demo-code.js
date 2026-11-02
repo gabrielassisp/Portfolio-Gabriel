@@ -1,9 +1,1 @@
-export const publicPlatformExample = {
-  "title": "Modelo fato da demonstração pública Postgres/dbt",
-  "explanation": "Código real do laboratório Docker Compose com dados fictícios. A plataforma profissional permanece privada.",
-  "language": "SQL / dbt",
-  "startLine": 1,
-  "href": "https://github.com/gabrielassisp/Portfolio-Gabriel/blob/main/platform-demo/dbt/models/fct_deals.sql",
-  "source": "platform-demo/dbt/models/fct_deals.sql",
-  "code": "select deal_id,owner_id,business_date,status,amount_cents,run_id\nfrom {{ ref('silver_deals') }}\n"
-};
+export const publicPlatformExample = {"title": "Modelo incremental real da demo pública", "explanation": "Trecho do arquivo fct_deals.sql versionado na demo sintética PostgreSQL/dbt.", "language": "SQL / dbt", "startLine": 1, "href": "https://github.com/gabrielassisp/Portfolio-Gabriel/blob/main/platform-demo/dbt/models/fct_deals.sql", "source": "platform-demo/dbt/models/fct_deals.sql", "code": "{{ config(materialized='incremental', unique_key='deal_id', incremental_strategy='delete+insert', on_schema_change='fail') }}\nselect incoming.deal_id,incoming.owner_id,incoming.business_date,incoming.status,\n       incoming.amount_cents,incoming.source_version,incoming.run_id\nfrom {{ ref('silver_deals') }} incoming\n{% if is_incremental() %}\nleft join {{ this }} existing on incoming.deal_id=existing.deal_id\nwhere existing.deal_id is null or incoming.source_version > existing.source_version\n{% endif %}\n"};

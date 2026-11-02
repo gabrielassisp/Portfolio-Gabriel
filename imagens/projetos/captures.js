@@ -1,5 +1,6 @@
 export const captures = {
- plataforma:{file:'plataforma.jpg',label:'API real dos pipelines',caption:'Captura da documentação Swagger da API FastAPI em execução no ambiente local. Nenhuma carga foi disparada para gerar esta imagem.'},
+ airflow:{file:'airflow.svg',label:'Arquitetura do projeto Airflow',caption:'Diagrama das dependências profissionais; não comprova uma execução. O código público é um exemplo sintético independente.'},
+ plataforma:{file:'platform-incremental.svg',label:'Trecho real do modelo incremental dbt',caption:'Representação tipográfica de código do arquivo público fct_deals.sql; não é uma captura do ambiente profissional.'},
  monitor:{file:'monitor.jpg',label:'Interface real do ETL Monitor',caption:'Captura da visão geral do monitor em execução. Os números correspondem ao instante da captura, não a indicadores atualizados em tempo real.'},
  economia:{file:'economia.jpg',label:'Relatório real gerado pelo pipeline',caption:'Captura do relatório HTML versionado no projeto, gerado em 20/03/2026. A execução original contém indicadores ausentes (NaN), preservados na imagem.'},
  sql:{file:'sql.jpg',label:'SQL real apresentado no estudo',caption:'Captura do código SQL publicado no estudo de caso. Mostra a consulta, sem resultados com registros de clientes.'},
