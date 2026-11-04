@@ -1,0 +1,19 @@
+{
+  "repository": "gabrielassisp/Brazil-Pipeline-Project",
+  "workflow": ".github/workflows/bigquery-cloud.yml",
+  "run_id": 41660095771,
+  "run_url": "https://github.com/gabrielassisp/Brazil-Pipeline-Project/actions/runs/41660095771",
+  "event": "schedule",
+  "conclusion": "success",
+  "head_sha": "5cce9bf1d94f06d674e97df7d196bb498e57dfdc",
+  "configured_cron_utc": "17 7 * * *",
+  "configured_local_time": "04:17 America/Sao_Paulo",
+  "created_at_utc": "2026-11-03T15:04:45Z",
+  "created_at_sao_paulo": "2026-11-03T12:04:45-03:00",
+  "job_id": 126000711928,
+  "job_completed_at_utc": "2026-11-03T15:07:10Z",
+  "rows": 75,
+  "dbt_models": 4,
+  "dbt_tests_passed": 16,
+  "limits": "One successful schedule event proves automatic triggering; does not establish punctuality or daily reliability."
+}
